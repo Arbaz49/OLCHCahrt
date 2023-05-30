@@ -74,8 +74,8 @@ const Chart = () => {
       }
     };
     const chart = new ApexCharts(document.getElementById("chart"), options);
-    chart.render();
-  },[])
+    apiData.length >1 && chart.render();
+  },[apiData])
   return (
     <div>
       chart component
@@ -90,7 +90,6 @@ const Chart = () => {
         {
           ["1h","1d","1w","1m","1y"].map((ele,index)=>{
             return (
-              
               <Button onClick={()=>alert(ele)} style={{border:"1px solid black",color:"black",padding:"0px",margin:"0px 5px"}} key={index} variant="outlined">{ele}</Button>
             )
           })
