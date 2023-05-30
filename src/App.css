@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0;
+  
+}
+
+
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+.apexcharts-tooltip {
+  background: #f3f3f3;
+  color: black;
+}
+.holc{
+  display: flex;
+  gap:40px
+}
+#chart{
+  /* border: 1px solid red !important; */
+ width: 65vw;
+ height: 10vh;
+}
+.my-tooltip{
+  display: none !important;
+}
+.container{
+  display: flex;
+  /* justify-content: space-between */
+}
+/* .container > .coinTable{
+  width: 30%;
+}*/
+
+/* .right{
+  border:1px solid red;
+  display: flex;
+  position: absolute;
+} */
+table{
+  /* border: 1px solid red; */
+  margin-left: 100px;
+}
+.tableRow :hover{
+  background-color: rgb(241, 220, 220);
+  border-radius: 8px;
+}
+.table {
+overflow-x: hidden;
+}
+.tablecell{
+  width: 5px;
+}
+.symbollRow :hover{
+background-color: black;
+color: white;
+cursor: pointer;
+}
