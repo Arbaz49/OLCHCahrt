@@ -27,7 +27,7 @@ import Paper from '@mui/material/Paper';
 
 export default function CoinsTable({ data ,setselcetedCoin}: any) {
   return (
-    <TableContainer className='table' component={Paper} style={{width:"30vw",height:"60vh",textAlign:"center"}}>
+    <TableContainer className='table' component={Paper} style={{width:"30vw",height:"95vh",textAlign:"center"}}>
       <Table sx={{ maxWidth: 100, minHeight: 300 }} style={{width:"30vw"}} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
