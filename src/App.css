@@ -36,6 +36,9 @@
  width: 65vw;
  height: 10vh;
 }
+.tableCell{
+  width:"10px"
+}
 .my-tooltip{
   display: none !important;
 }
