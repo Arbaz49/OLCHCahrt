@@ -10,6 +10,7 @@ const App: React.FC = () => {
   const [timeFrame, setTimeFrame] = useState<string>(InitialTimeFrame);
   const [selectedCoin, setSelectedCoin] = useState<string>(InitialSelectedCoin);
 
+ 
   return (
     <>
       <div className="container">

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useEffect,useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,7 +6,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import { WS_URL } from '../utils/constants';
+const w = new WebSocket(WS_URL);
 function createData(
   name: string,
   calories: number,
@@ -24,33 +25,49 @@ const rows = [
   createData('Cupcake', 305, 3.7, 67, 4.3),
   createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
-
-export default function OrderBookTable() {
+interface IProps{
+  selectedCoin:string
+}
+export default function OrderBookTable({selectedCoin}:IProps) {
+  const [bookData,setBookData] = useState<number[]>([])
+  useEffect(()=>{
+      let msg = JSON.stringify({ 
+          event: 'subscribe', 
+          channel: 'book', 
+          symbol: selectedCoin 
+        })
+      w.onopen = ():void => {
+              w.send(msg);
+          };
+          w.onmessage=(a:any):void=>{
+              console.log("socket data",a.data)
+           if(Array.isArray(a.data[1])){
+            console.log("mydata",a.data[1])
+           }
+            }},[])
   return (
     <TableContainer component={Paper} style={{width:"1100px",margin:"auto"}}>
-      <Table sx={{ minWidth: 250 }} aria-label="simple table">
+      <Table sx={{ minWidth: 250 }} style={{width:"600px",textAlign:"center"}} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell >Price</TableCell>
             <TableCell >Count</TableCell>
-            <TableCell >Amont</TableCell>
-
+            <TableCell >Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {/* {bookData.map((order) => (
             <TableRow
-              key={row.name}
+              key={order[0]}
              
             >
               <TableCell component="th">
-                {row.name}
+                {order[1]}
               </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
+              <TableCell align="right">{order[2]}</TableCell>
        
             </TableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
     </TableContainer>

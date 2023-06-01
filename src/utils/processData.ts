@@ -2,7 +2,7 @@ import { Chartdata } from "../types/dataType";
 
 const processChartData=(dataArray:any[]):Chartdata[]=>{
     let array: Chartdata[] = [];
-    let entry: Chartdata = {};
+    let entry: Chartdata = {x:new Date(), y:[0,0,0,0]};
     for (let i = 0; i < dataArray.length; i++) {
       entry = {
         x: new Date(dataArray[i][0]),
