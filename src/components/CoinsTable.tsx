@@ -6,12 +6,14 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { CoinsType } from '../types/dataType';
 
 interface IProps {
-  data:any[],
+  data:CoinsType,
   setselcetedCoin:React.Dispatch<React.SetStateAction<string>>
 }
 export default function CoinsTable({data,setselcetedCoin}:IProps) {
+  console.log("coinsList",data)
   return (
     <TableContainer className='table' component={Paper} style={{width:"30vw",height:"95vh",textAlign:"center"}}>
       <Table className='table' sx={{ maxWidth: 100, minHeight: 300 }} style={{width:"30vw"}} size="small" aria-label="a dense table">
@@ -23,7 +25,7 @@ export default function CoinsTable({data,setselcetedCoin}:IProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row: any) => (
+          {data.map((row:any) => (
             <TableRow onClick={()=>setselcetedCoin(row[0])}
             className='symbollRow'
               key={row[0]}

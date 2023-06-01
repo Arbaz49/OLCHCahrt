@@ -5,13 +5,10 @@ import { Button } from '@mui/material';
 import { processChartData } from '../utils/processData';
 import ReactApexChart from 'react-apexcharts';
 import { buttonsData } from '../utils/constants';
+import { ChartOption } from '../utils/ChartOptions';
+import { IProps } from '../types/dataType';
 
-interface IProps {
-  timeFrame: string;
-  selectedCoin: string;
-  setTimeFrame: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
-}
+
 
 const Chart = (props: IProps) => {
 
@@ -30,56 +27,7 @@ setApiData({ name: "candleData", data: [...processedData] });
     o: 0.00,
     c: 0.00
   });
-  const  options :any ={
-    chart: {
-      height: 450,
-      type: 'candlestick',
-      
-    },
-    title: {
-      text: 'OLCH Chart',
-      align: 'left'
-    },
-    annotations: {
-      xaxis: [
-        {
-          borderColor: '#00E396',
-          label: {
-            borderColor: '#00E396',
-            style: {
-              fontSize: '12px',
-              color: '#fff',
-              background: '#00E396'
-            },
-            orientation: 'horizontal',
-            offsetY: 7,
-            text: 'Annotation Test'
-          }
-        }
-      ]
-    },
-    tooltip: {
-        cssClass:"my-tooltip",
-        enabled: true,
-        custom: function({ series, seriesIndex, dataPointIndex, w }:any) {
-          setTooltip({
-                c:w.globals.seriesCandleC[seriesIndex][dataPointIndex],
-                h:w.globals.seriesCandleH[seriesIndex][dataPointIndex],
-               o: w.globals.seriesCandleO[seriesIndex][dataPointIndex],
-               l:w.globals.seriesCandleL[seriesIndex][dataPointIndex]
-            })
-         console.log( "tooltip",w.globals.seriesCandleC[seriesIndex][dataPointIndex])
-        }
-      },
-    xaxis: {
-      type: 'datetime',
-    },
-    yaxis: {
-      tooltip: {
-        enabled: true
-      }
-    }
-  }
+  const  options :any = ChartOption(setTooltip);
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
