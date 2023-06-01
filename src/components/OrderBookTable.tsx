@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,48 +8,43 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { WS_URL } from '../utils/constants';
 const w = new WebSocket(WS_URL);
-// function createData(
-//   name: string,
-//   calories: number,
-//   fat: number,
-//   carbs: number,
-//   protein: number,
-// ) {
-//   return { name, calories, fat, carbs, protein };
-// }
+function createData(
+  name: string,
+  calories: number,
+  fat: number,
+  carbs: number,
+  protein: number,
+) {
+  return { name, calories, fat, carbs, protein };
+}
 
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//   createData('Eclair', 262, 16.0, 24, 6.0),
-//   createData('Cupcake', 305, 3.7, 67, 4.3),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9),
-// ];
+const rows = [
+  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+  createData('Eclair', 262, 16.0, 24, 6.0),
+  createData('Cupcake', 305, 3.7, 67, 4.3),
+  createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
 interface IProps{
   selectedCoin:string
 }
-
-
-
 export default function OrderBookTable({selectedCoin}:IProps) {
-  let bookDataMap=new Map<number,[number,number,number]>();
-  // const [bookData,setBookData] = useState (bookDataMap)
-  // useEffect(()=>{
-  //     let msg = JSON.stringify({ 
-  //         event: 'subscribe', 
-  //         channel: 'book', 
-  //         symbol: selectedCoin 
-  //       })
-  //     w.onopen = ():void => {
-  //             w.send(msg);
-  //         };
-  //         w.onmessage=(a: MessageEvent<string>):void=>{
-  //           const _array=JSON.parse(a.data);
-  // if(Array.isArray(_array) && _array[1]!=="hb" ){//3  ["()()(),"(())()",]
-  //   bookDataMap.set(_array[0],_array[1]);
-  //           }
-  //           // setBookData({...bookDataMap})
-  //         }},[bookDataMap, selectedCoin])
+  const [bookData,setBookData] = useState<number[]>([])
+  useEffect(()=>{
+      let msg = JSON.stringify({ 
+          event: 'subscribe', 
+          channel: 'book', 
+          symbol: selectedCoin 
+        })
+      w.onopen = ():void => {
+              w.send(msg);
+          };
+          w.onmessage=(a:any):void=>{
+              console.log("socket data",a.data)
+           if(Array.isArray(a.data[1])){
+            console.log("mydata",a.data[1])
+           }
+            }},[])
   return (
     <TableContainer component={Paper} style={{width:"1100px",margin:"auto"}}>
       <Table sx={{ minWidth: 250 }} style={{width:"600px",textAlign:"center"}} aria-label="simple table">
@@ -61,7 +56,7 @@ export default function OrderBookTable({selectedCoin}:IProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* {bookData?.map((order:any) => (
+          {/* {bookData.map((order) => (
             <TableRow
               key={order[0]}
              

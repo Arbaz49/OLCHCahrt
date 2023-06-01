@@ -1,6 +1,6 @@
 import { Chartdata } from "../types/dataType";
 
-const processChartData=(dataArray:Array<[number,number,number,number,number]>):Chartdata[]=>{
+const processChartData=(dataArray:any[]):Chartdata[]=>{
     let array: Chartdata[] = [];
     let entry: Chartdata = {x:new Date(), y:[0,0,0,0]};
     for (let i = 0; i < dataArray.length; i++) {

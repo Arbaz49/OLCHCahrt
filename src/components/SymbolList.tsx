@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { getSymbollsData } from '../utils/services';
 import CoinsTable from './CoinsTable';
-import { CoinsType, IProps } from '../types/dataType';
 
+interface IProps {
+  timeFrame : string;
+  selectedCoin : string;
+  setTimeFrame :  React.Dispatch<React.SetStateAction<string>>; 
+  setSelectedCoin :  React.Dispatch<React.SetStateAction<string>>; 
+}
 
 const SymbollsList = (props : IProps) => {
-  const [coinsList, setCoinsList] = useState<CoinsType>(["",0,0,0,0,0,0,0,0,0,0]);
+  const [coinsList, setCoinsList] = useState<unknown[]>([]);
   
   useEffect(()=>{
     (async()=>{
@@ -13,6 +18,7 @@ const data=await    getSymbollsData()
 setCoinsList(data);
     })()
   },[])
+
   return (
     <div>
       SymbollsList Component
