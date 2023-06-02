@@ -15,9 +15,15 @@ setCoinsList(data);
   },[])
   return (
     <div>
-      SymbollsList Component
+      <h2>
+
+      SymbolsList Component
+      </h2>
       <div>
+        <h4>
+
       selected :{props.selectedCoin}
+        </h4>
       </div>
       <CoinsTable setselcetedCoin={props.setSelectedCoin} data={coinsList}/>
    

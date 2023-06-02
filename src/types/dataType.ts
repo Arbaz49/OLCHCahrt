@@ -2,9 +2,6 @@ export interface Chartdata{
     x:Date;
     y:[number,number,number,number]
 }
-// export interface BookData{
-
-// }
 
 export type CoinsType=[string,number,number,number,number,number,number,number,number,number,number];
 

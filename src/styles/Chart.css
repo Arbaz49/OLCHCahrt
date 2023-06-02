@@ -1,0 +1,26 @@
+.holcDiv {
+  position: relative;
+  top: 0px;
+  left: 50px;
+  display: flex;
+  gap: 40px;
+}
+.chartContainer {
+  display: flex;
+  flex-direction: column;
+}
+#chart {
+  width: 65vw;
+  height: 10vh;
+}
+.ChartFilterButtons {
+  position: absolute;
+  bottom: 10px;
+  margin-left: 20px;
+}
+.chartButton {
+  border: 1px solid black;
+  color: black;
+  padding: 0px;
+  margin: 0px 5px;
+}

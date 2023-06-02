@@ -6,7 +6,7 @@ import { BASE_URL } from "./constants";
 
 
 
-const getCandlesdata = async (timeFrame: string, selecetedCoin: string) => {
+export const getCandlesData = async (timeFrame: string, selecetedCoin: string) => {
   try {
     const { data } = await axios.get(`${BASE_URL}candles/trade:${timeFrame}:${selecetedCoin}/hist?limit=330`);
     console.log("api data", data);
@@ -17,7 +17,7 @@ const getCandlesdata = async (timeFrame: string, selecetedCoin: string) => {
 
 }
 
-const getSymbollsData = async () => {
+export const getSymbollsData = async () => {
   try {
     const { data } = await axios.get(`${BASE_URL}tickers?symbols=ALL`);
     return data;
@@ -26,4 +26,4 @@ const getSymbollsData = async () => {
   }
 };
 
-export { getCandlesdata, getSymbollsData }
+// export { getCandlesData, getSymbollsData }

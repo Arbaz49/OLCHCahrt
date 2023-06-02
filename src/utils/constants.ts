@@ -1,8 +1,8 @@
-let InitialTimeFrame = "30m";
-let InitialSelectedCoin = "tBTCUSD";
-let BASE_URL="https://api-pub.bitfinex.com/v2/";
-let WS_URL='wss://api-pub.bitfinex.com/ws/2';
-let buttonsData = [
+export const InitialTimeFrame = "30m";
+export const InitialSelectedCoin = "tBTCUSD";
+export const BASE_URL="https://api-pub.bitfinex.com/v2/";
+export const WS_URL='wss://api-pub.bitfinex.com/ws/2';
+export const buttonsData = [
   {
     lable: "1h",
     value: "1m",
@@ -25,4 +25,3 @@ let buttonsData = [
   },
 ];
 
-export { InitialTimeFrame, InitialSelectedCoin, buttonsData,BASE_URL,WS_URL };

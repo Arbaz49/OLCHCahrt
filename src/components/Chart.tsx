@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { getCandlesdata } from '../utils/services';
+import "../styles/Chart.css";
+import { getCandlesData } from '../utils/services';
 import { ToolTip } from '../types/tooltipTypes';
 import { Button } from '@mui/material';
 import { processChartData } from '../utils/processData';
@@ -14,10 +15,10 @@ const Chart = (props: IProps) => {
 
   const [apiData, setApiData] = useState<any>([]);
   useEffect(() => {
-    (async()=>{
-const data=await getCandlesdata(props.timeFrame, props.selectedCoin);
-const processedData = processChartData(data);
-setApiData({ name: "candleData", data: [...processedData] });
+    (async () => {
+      const data = await getCandlesData(props.timeFrame, props.selectedCoin);
+      const processedData = processChartData(data);
+      setApiData({ name: "candleData", data: [...processedData] });
     })()
   }, [props.selectedCoin, props.timeFrame])
 
@@ -27,12 +28,15 @@ setApiData({ name: "candleData", data: [...processedData] });
     o: 0.00,
     c: 0.00
   });
-  const  options :any = ChartOption(setTooltip);
+  const options: any = ChartOption(setTooltip);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      chart component
-      <div className="holc" style={{ position: "relative", top: "0px", left: "50px" }}>
+    <div className='chartContainer' >
+      <h2>
+        chart component
+
+      </h2>
+      <div className="holcDiv" >
         <span>
           H:{tooltip.h}</span><span>L:{tooltip.l}</span><span>O:{tooltip.o}</span><span>C:{tooltip.c}</span>
       </div>
@@ -42,11 +46,11 @@ setApiData({ name: "candleData", data: [...processedData] });
           type="candlestick" height={600} />
       </div>
 
-      <div className="buttons" style={{ position: "absolute", bottom: "10px",marginLeft:"20px" }}>
+      <div className="ChartFilterButtons" >
         {
-          buttonsData?.map((ele, index) => {
+          buttonsData?.map((ele) => {
             return (
-              <Button onClick={() => props.setTimeFrame(ele.value)} style={{ border: "1px solid black", color: "black", padding: "0px", margin: "0px 5px" }} key={index} variant="outlined">{ele.lable}</Button>
+              <Button className='chartButton' onClick={() => props.setTimeFrame(ele.value)}  key={ele.lable} variant="outlined">{ele.lable}</Button>
             )
           })
         }

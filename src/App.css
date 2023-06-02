@@ -27,18 +27,8 @@
   background: #f3f3f3;
   color: black;
 }
-.holc{
-  display: flex;
-  gap:40px
-}
-#chart{
-  /* border: 1px solid red !important; */
- width: 65vw;
- height: 10vh;
-}
-.tableCell{
-  width:"10px"
-}
+
+
 .my-tooltip{
   display: none !important;
 }
