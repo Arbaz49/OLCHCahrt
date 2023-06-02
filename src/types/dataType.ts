@@ -3,6 +3,8 @@ export interface Chartdata{
     y:[number,number,number,number]
 }
 
+// type CoinType = string;
+
 export type CoinsType=[string,number,number,number,number,number,number,number,number,number,number];
 
 export interface IProps {
@@ -11,3 +13,7 @@ export interface IProps {
     setTimeFrame: React.Dispatch<React.SetStateAction<string>>;
     setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
   }
+  export   type NewType = {
+    name: string;
+    data: Chartdata[];
+  };

@@ -51,8 +51,8 @@ export default function OrderBookTable({selectedCoin}:IProps) {
   //           // setBookData({...bookDataMap})
   //         }},[bookDataMap, selectedCoin])
   return (
-    <TableContainer component={Paper} style={{width:"1100px",margin:"auto"}}>
-      <Table sx={{ minWidth: 250 }} style={{width:"600px",textAlign:"center"}} aria-label="simple table">
+    <TableContainer component={Paper} sx={{ minWidth: 650 }}  style={{width:"600px",margin:"auto"}}>
+      <Table sx={{ minWidth: 650 }}  aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell >Price</TableCell>

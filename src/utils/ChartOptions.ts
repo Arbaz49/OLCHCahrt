@@ -1,24 +1,12 @@
 export const ChartOption = (setTooltipRef: Function) => {
   return {
-      chart: {
-        height: 450,
-        type: 'candlestick',
+      // chart: {
+      //   height: 450,
+      //   // type: 'candlestick',
         
-      },
-      toolbar: {
-        tools: {
-            download: false,
-            selection: false,
-            zoom: false,
-            zoomin: false,
-            zoomout: false,
-            pan: false,
-        }
-    },
-      title: {
-        text: 'OLCH Chart',
-        align: 'left'
-      },
+      // },
+    
+  
       annotations: {
         xaxis: [
           {

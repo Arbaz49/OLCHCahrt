@@ -3,24 +3,32 @@ import "../styles/Chart.css";
 import { getCandlesData } from '../utils/services';
 import { ToolTip } from '../types/tooltipTypes';
 import { Button } from '@mui/material';
-import { processChartData } from '../utils/processData';
 import ReactApexChart from 'react-apexcharts';
 import { buttonsData } from '../utils/constants';
 import { ChartOption } from '../utils/ChartOptions';
-import { IProps } from '../types/dataType';
+import { IProps, NewType } from '../types/dataType';
+// import { ChartOptionsType } from '../types/ChartOptionsType';
 
 
 
 const Chart = (props: IProps) => {
 
-  const [apiData, setApiData] = useState<any>([]);
+  // type NewType = {
+  //   name: string;
+  //   data: Chartdata[];
+  // };
+
+
+ //   (async () => {
+  //     const data = await getCandlesData(props.timeFrame, props.selectedCoin);
+  //     const processedData = processChartData(data);
+  //     setApiData({ name: "candleData", data: [...processedData] });
+  //   })()
+  const [apiData, setApiData] = useState<NewType>({ name: "", data: [] });
   useEffect(() => {
-    (async () => {
-      const data = await getCandlesData(props.timeFrame, props.selectedCoin);
-      const processedData = processChartData(data);
-      setApiData({ name: "candleData", data: [...processedData] });
-    })()
-  }, [props.selectedCoin, props.timeFrame])
+    getCandlesData(props.timeFrame,props.selectedCoin,setApiData)
+ 
+  }, [props.selectedCoin, props.timeFrame]);
 
   const [tooltip, setTooltip] = useState<ToolTip>({
     h: 0.00,
@@ -29,6 +37,7 @@ const Chart = (props: IProps) => {
     c: 0.00
   });
   const options: any = ChartOption(setTooltip);
+
 
   return (
     <div className='chartContainer' >
@@ -50,7 +59,7 @@ const Chart = (props: IProps) => {
         {
           buttonsData?.map((ele) => {
             return (
-              <Button className='chartButton' onClick={() => props.setTimeFrame(ele.value)}  key={ele.lable} variant="outlined">{ele.lable}</Button>
+              <Button className='chartButton' onClick={() => props.setTimeFrame(ele.value)} key={ele.lable} variant="outlined">{ele.lable}</Button>
             )
           })
         }

@@ -8,9 +8,11 @@ const OrderBook = ({selectedCoin}:IProps) => {
 
               return (
     <div style={{textAlign:"center"}}>
-      OrderBook
+      <h3>OrderBook</h3>
       <div>
-        selected : {selectedCoin}
+        
+        <h3>
+selected : {selectedCoin}</h3>
       </div>
       <OrderBookTable selectedCoin={selectedCoin}/>
     </div>

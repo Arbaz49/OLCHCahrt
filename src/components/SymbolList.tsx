@@ -5,24 +5,19 @@ import { CoinsType, IProps } from '../types/dataType';
 
 
 const SymbollsList = (props : IProps) => {
-  const [coinsList, setCoinsList] = useState<CoinsType>(["",0,0,0,0,0,0,0,0,0,0]);
+  const [coinsList, setCoinsList] = useState<CoinsType[]>([["",0,0,0,0,0,0,0,0,0,0]]);
   
   useEffect(()=>{
-    (async()=>{
-const data=await    getSymbollsData()
-setCoinsList(data);
-    })()
+ getSymbollsData(setCoinsList);
   },[])
   return (
     <div>
       <h2>
-
       SymbolsList Component
       </h2>
       <div>
         <h4>
-
-      selected :{props.selectedCoin}
+      Selected :{props.selectedCoin}
         </h4>
       </div>
       <CoinsTable setselcetedCoin={props.setSelectedCoin} data={coinsList}/>

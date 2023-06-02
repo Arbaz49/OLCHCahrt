@@ -1,26 +1,29 @@
 import axios from "axios"
 import { BASE_URL } from "./constants";
+import { processChartData } from "./processData";
+import { CoinsType, NewType } from "../types/dataType";
 
 
 
 
 
 
-export const getCandlesData = async (timeFrame: string, selecetedCoin: string) => {
+export const getCandlesData = async (timeFrame: string, selecetedCoin: string,setApiData:React.Dispatch<React.SetStateAction<NewType>>) => {
   try {
     const { data } = await axios.get(`${BASE_URL}candles/trade:${timeFrame}:${selecetedCoin}/hist?limit=330`);
     console.log("api data", data);
-    return data;
-  } catch (e:any) {
-    console.log(e.message);
+   const a= processChartData(data);
+      setApiData ({ name: "candleData", data: [...a] }); 
+  } catch (e) {
+    console.log(e)
   }
 
 }
 
-export const getSymbollsData = async () => {
+export const getSymbollsData = async (setCoinsList: React.Dispatch<React.SetStateAction<CoinsType[]>>) => {
   try {
     const { data } = await axios.get(`${BASE_URL}tickers?symbols=ALL`);
-    return data;
+    setCoinsList(data)
   } catch (e: any) {
     console.log(e.message);
   }
