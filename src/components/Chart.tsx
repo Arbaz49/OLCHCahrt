@@ -4,8 +4,8 @@ import { getCandlesData } from '../utils/services';
 import { ToolTip } from '../types/tooltipTypes';
 import { Button } from '@mui/material';
 import ReactApexChart from 'react-apexcharts';
-import { buttonsData } from '../utils/constants';
-import { ChartOption } from '../utils/ChartOptions';
+import { buttonsData } from '../utils/Constants';
+import { chartOption } from '../utils/ChartOptions';
 import { IProps, NewType } from '../types/dataType';
 // import { ChartOptionsType } from '../types/ChartOptionsType';
 
@@ -36,7 +36,7 @@ const Chart = (props: IProps) => {
     o: 0.00,
     c: 0.00
   });
-  const options: any = ChartOption(setTooltip);
+  const options: any = chartOption(setTooltip);
 
 
   return (

@@ -1,4 +1,4 @@
-export const ChartOption = (setTooltipRef: Function) => {
+export const chartOption = (setTooltipRef: Function) => {
   return {
       // chart: {
       //   height: 450,
