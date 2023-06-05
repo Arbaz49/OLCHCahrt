@@ -4,9 +4,10 @@ import { getCandlesData } from '../utils/services';
 import { ToolTip } from '../types/tooltipTypes';
 import { Button } from '@mui/material';
 import ReactApexChart from 'react-apexcharts';
-import { buttonsData } from '../utils/Constants';
-import { chartOption } from '../utils/ChartOptions';
+// import { buttonsData } from '../utils/Constants';
+import { chartOption } from '../utils/chartOptions';
 import { IProps, NewType } from '../types/dataType';
+import { buttonsData } from '../utils/constants';
 // import { ChartOptionsType } from '../types/ChartOptionsType';
 
 
@@ -17,7 +18,10 @@ const Chart = (props: IProps) => {
   //   name: string;
   //   data: Chartdata[];
   // };
-
+interface ButtonsType{
+lable:string,
+value:string
+}
 
  //   (async () => {
   //     const data = await getCandlesData(props.timeFrame, props.selectedCoin);
@@ -57,7 +61,7 @@ const Chart = (props: IProps) => {
 
       <div className="ChartFilterButtons" >
         {
-          buttonsData?.map((ele) => {
+          buttonsData?.map((ele:ButtonsType) => {
             return (
               <Button className='chartButton' onClick={() => props.setTimeFrame(ele.value)} key={ele.lable} variant="outlined">{ele.lable}</Button>
             )

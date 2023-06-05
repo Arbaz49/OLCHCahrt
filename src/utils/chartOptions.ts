@@ -1,11 +1,16 @@
 export const chartOption = (setTooltipRef: Function) => {
   return {
-      // chart: {
-      //   height: 450,
-      //   // type: 'candlestick',
-        
-      // },
-    
+    plotOptions: {
+      candlestick: {
+        colors: {
+          upward: '#00B746',
+          downward: '#EF403C'
+        },
+        wick: {
+          useFillColor: true
+        }
+      }
+  },
   
       annotations: {
         xaxis: [

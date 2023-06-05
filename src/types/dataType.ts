@@ -3,7 +3,6 @@ export interface Chartdata{
     y:[number,number,number,number]
 }
 
-// type CoinType = string;
 
 export type CoinsType=[string,number,number,number,number,number,number,number,number,number,number];
 

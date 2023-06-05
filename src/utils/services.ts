@@ -1,7 +1,7 @@
 import axios from "axios"
-import { BASE_URL } from "./Constants";
-import { processChartData } from "./ProcessData";
 import { CoinsType, NewType } from "../types/dataType";
+import { processChartData } from "./processData";
+import { BASE_URL } from "./constants";
 
 
 

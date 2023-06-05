@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { WS_URL } from '../utils/Constants';
+import { WS_URL } from '../utils/constants';
 const w = new WebSocket(WS_URL);
 // function createData(
 //   name: string,
