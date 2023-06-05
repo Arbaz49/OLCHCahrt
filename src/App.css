@@ -2,13 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
   margin: 0;
   padding: 0;
-  
 }
-
-
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -28,11 +25,10 @@
   color: black;
 }
 
-
-.my-tooltip{
+.my-tooltip {
   display: none !important;
 }
-.container{
+.container {
   display: flex;
   /* justify-content: space-between */
 }
@@ -45,22 +41,22 @@
   display: flex;
   position: absolute;
 } */
-table{
+table {
   /* border: 1px solid red; */
   margin-left: 100px;
 }
-.tableRow :hover{
+.tableRow :hover {
   background-color: rgb(241, 220, 220);
   border-radius: 8px;
 }
 .table {
-overflow-x: hidden;
+  overflow-x: hidden;
 }
-.tablecell{
+.tablecell {
   width: 5px;
 }
-.symbollRow :hover{
-background-color: black;
-color: white;
-cursor: pointer;
+.symbollRow :hover {
+  background-color: black;
+  color: white;
+  cursor: pointer;
 }

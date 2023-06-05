@@ -1,74 +1,75 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import "../styles/Chart.css";
-import { getCandlesData } from '../utils/services';
-import { ToolTip } from '../types/tooltipTypes';
-import { Button } from '@mui/material';
-import ReactApexChart from 'react-apexcharts';
-// import { buttonsData } from '../utils/Constants';
-import { chartOption } from '../utils/chartOptions';
-import { IProps, NewType } from '../types/dataType';
-import { buttonsData } from '../utils/constants';
-// import { ChartOptionsType } from '../types/ChartOptionsType';
+import { getCandlesData } from "../utils/Services";
+import { ToolTip } from "../types/TooltipTypes";
+import { Button } from "@mui/material";
+import ReactApexChart from "react-apexcharts";
 
+import {
+  ButtonsType,
+  CandleStickDataType,
+  ChartProps,
+} from "../types/DataType";
+import { buttonsData, candleStickChartHeight } from "../utils/Constants";
+import { chartOption } from "../utils/ChartOptions";
 
+const Chart = (props: ChartProps) => {
+  // const [CandleSticChartData, setCandleSticChartData] =
+  //   useState<CandleStickDataType>({ name: "", data: [] });
+  const [CandleSticChartData, setCandleSticChartData] =
+  useState<any>({ name: "", data: [] });
+  const [tooltip, setTooltip] = useState<ToolTip>({
+    h: 0.0,
+    l: 0.0,
+    o: 0.0,
+    c: 0.0,
+  });
 
-const Chart = (props: IProps) => {
+  const handleCandlesData = async () => {
+    const response = await getCandlesData(props.timeFrame, props.selectedCoin);
+    console.log("myData", response);
+    // alert(typeof response)
+    setCandleSticChartData(response);
+  };
 
-  // type NewType = {
-  //   name: string;
-  //   data: Chartdata[];
-  // };
-interface ButtonsType{
-lable:string,
-value:string
-}
-
- //   (async () => {
-  //     const data = await getCandlesData(props.timeFrame, props.selectedCoin);
-  //     const processedData = processChartData(data);
-  //     setApiData({ name: "candleData", data: [...processedData] });
-  //   })()
-  const [apiData, setApiData] = useState<NewType>({ name: "", data: [] });
   useEffect(() => {
-    getCandlesData(props.timeFrame,props.selectedCoin,setApiData)
- 
+    handleCandlesData();
   }, [props.selectedCoin, props.timeFrame]);
 
-  const [tooltip, setTooltip] = useState<ToolTip>({
-    h: 0.00,
-    l: 0.00,
-    o: 0.00,
-    c: 0.00
-  });
   const options: any = chartOption(setTooltip);
-
-
   return (
-    <div className='chartContainer' >
-      <h2>
-        chart component
-
-      </h2>
-      <div className="holcDiv" >
-        <span>
-          H:{tooltip.h}</span><span>L:{tooltip.l}</span><span>O:{tooltip.o}</span><span>C:{tooltip.c}</span>
+    <div className="chartContainer">
+      <h2>Chart component</h2>
+      <div className="holcDiv">
+        <span>H:{tooltip.h}</span>
+        <span>L:{tooltip.l}</span>
+        <span>O:{tooltip.o}</span>
+        <span>C:{tooltip.c}</span>
       </div>
       <div id="chart">
-        <ReactApexChart options={options}
-          series={[apiData]}
-          type="candlestick" height={600} />
+        <ReactApexChart
+          options={options}
+          series={[CandleSticChartData]}
+          type="candlestick"
+          height={candleStickChartHeight}
+        />
       </div>
 
-      <div className="ChartFilterButtons" >
-        {
-          buttonsData?.map((ele:ButtonsType) => {
-            return (
-              <Button className='chartButton' onClick={() => props.setTimeFrame(ele.value)} key={ele.lable} variant="outlined">{ele.lable}</Button>
-            )
-          })
-        }
+      <div className="ChartFilterButtons">
+        {buttonsData?.map((btn: ButtonsType) => {
+          return (
+            <Button
+              className="chartButton"
+              onClick={() => props.setTimeFrame(btn.value)}
+              key={btn.lable}
+              variant="outlined"
+            >
+              {btn.lable}
+            </Button>
+          );
+        })}
       </div>
     </div>
-  )
-}
-export default Chart
+  );
+};
+export default Chart;

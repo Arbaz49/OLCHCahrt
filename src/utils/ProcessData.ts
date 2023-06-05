@@ -1,6 +1,6 @@
-import { Chartdata } from "../types/dataType";
+import { Chartdata } from "../types/DataType";
 
-const processChartData=(dataArray:Array<[number,number,number,number,number]>):Chartdata[]=>{
+export const processChartData=(dataArray:Array<[number,number,number,number,number]>):Chartdata[]=>{
     const array: Chartdata[] = [];
     let entry: Chartdata = {x:new Date(), y:[0,0,0,0]};
     for (let i = 0; i < dataArray.length; i++) {
@@ -12,4 +12,3 @@ const processChartData=(dataArray:Array<[number,number,number,number,number]>):C
     }
     return array;
   }
-  export{processChartData}

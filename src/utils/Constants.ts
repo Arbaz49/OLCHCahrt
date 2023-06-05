@@ -1,5 +1,6 @@
-export const InitialTimeFrame = "30m";
-export const InitialSelectedCoin = "tBTCUSD";
+export const Initial_TimeFrame = "30m";
+export const Initial_SelectedCoin = "tBTCUSD";
+export const candleStickChartHeight=600;
 export const BASE_URL="https://api-pub.bitfinex.com/v2/";
 export const WS_URL='wss://api-pub.bitfinex.com/ws/2';
 export const buttonsData = [

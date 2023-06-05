@@ -1,22 +1,19 @@
-import React from 'react'
-import OrderBookTable from './OrderBookTable';
+import React from "react";
+import OrderBookTable from "./OrderBookTable";
 
-interface IProps{
-    selectedCoin:string
+interface IProps {
+  selectedCoin: string;
 }
-const OrderBook = ({selectedCoin}:IProps) => {
-
-              return (
-    <div style={{textAlign:"center"}}>
+const OrderBook = ({ selectedCoin }: IProps) => {
+  return (
+    <div style={{ textAlign: "center" }}>
       <h3>OrderBook</h3>
       <div>
-        
-        <h3>
-selected : {selectedCoin}</h3>
+        <h3>Selected : {selectedCoin}</h3>
       </div>
-      <OrderBookTable selectedCoin={selectedCoin}/>
+      <OrderBookTable selectedCoin={selectedCoin} />
     </div>
-  )
-}
+  );
+};
 
-export default OrderBook
+export default OrderBook;
