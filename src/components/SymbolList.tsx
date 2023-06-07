@@ -24,10 +24,6 @@ const SymbollsList = (props: ChartProps) => {
 
   return (
     <div>
-      <h2>SymbolsList Component</h2>
-      <div>
-        <h4>Selected :{props.selectedCoin}</h4>
-      </div>
       <CoinsTable
         setselcetedCoin={props.setSelectedCoin}
         coinsTableData={coinsList}

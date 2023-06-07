@@ -44,17 +44,14 @@ export const chartOption = (setTooltipRef: Function) => {
         dataPointIndex: number;
         w: any;
       }) {
-        console.log("HLOCtype", series);
+        console.log("HLOCtype", w.globals.seriesCandleH[seriesIndex][dataPointIndex]);
         setTooltipRef({
           c: w.globals.seriesCandleC[seriesIndex][dataPointIndex],
           h: w.globals.seriesCandleH[seriesIndex][dataPointIndex],
           o: w.globals.seriesCandleO[seriesIndex][dataPointIndex],
           l: w.globals.seriesCandleL[seriesIndex][dataPointIndex],
         });
-        console.log(
-          "tooltip",
-          w.globals.seriesCandleC[seriesIndex][dataPointIndex]
-        );
+ 
       },
     },
     xaxis: {
@@ -63,6 +60,11 @@ export const chartOption = (setTooltipRef: Function) => {
     yaxis: {
       tooltip: {
         enabled: true,
+      },
+      labels: {
+        formatter: function (value:number) {
+          return value;
+        }
       },
     },
   };

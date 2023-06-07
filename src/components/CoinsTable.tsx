@@ -1,4 +1,3 @@
-import * as React from "react";
 import "../styles/CoinsTable.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,11 +7,17 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { CoinsProps, CoinsType } from "../types/DataType";
+import { useState } from "react";
 
 export default function CoinsTable({
   coinsTableData,
   setselcetedCoin,
 }: CoinsProps) {
+  const [coinIndex,setCoinIndex]=useState<number>(-1);
+  const handleClick=(coin:string,index:number)=>{
+    setselcetedCoin(coin);
+    setCoinIndex(index)
+  }
   return (
     <TableContainer className="table" component={Paper}>
       <Table
@@ -28,12 +33,13 @@ export default function CoinsTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {coinsTableData?.map((row: CoinsType) => (
+          {coinsTableData?.map((row: CoinsType,index) => (
             <TableRow
               onClick={() => setselcetedCoin(row[0])}
               className="symbollRow"
               key={row[0]}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              style={coinIndex===index ?{backgroundColor:"aqua"}:{}}
             >
               <TableCell className="tableCell" component="th" scope="row">
                 {row[0].slice(1,4)}

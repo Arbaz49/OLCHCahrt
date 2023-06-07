@@ -27,9 +27,11 @@
 
 .my-tooltip {
   display: none !important;
+
 }
 .container {
   display: flex;
+  padding: 20px;
   /* justify-content: space-between */
 }
 /* .container > .coinTable{
@@ -48,6 +50,9 @@ table {
 .tableRow :hover {
   background-color: rgb(241, 220, 220);
   border-radius: 8px;
+}
+.cell{
+  width:40px
 }
 .table {
   overflow-x: hidden;

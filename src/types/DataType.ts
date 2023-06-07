@@ -18,8 +18,10 @@ export type CoinsType = [
 ];
 
 export interface ChartProps {
+  loading?:boolean,
+  setloading?:React.Dispatch<React.SetStateAction<boolean>>;
   timeFrame: string;
-  selectedCoin: string;
+  selectedCoin: string ;
   setTimeFrame: React.Dispatch<React.SetStateAction<string>>;
   setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -34,4 +36,7 @@ export interface ButtonsType {
 export interface CoinsProps {
   coinsTableData: CoinsType[];
   setselcetedCoin: React.Dispatch<React.SetStateAction<string>>;
+}
+export interface OrderProps {
+  selectedCoin: string|undefined;
 }

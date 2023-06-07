@@ -1,21 +1,24 @@
 .holcDiv {
-  position: relative;
-  top: 0px;
-  left: 50px;
+  position: absolute;
+  top: 50px;
+  left: 430px;
   display: flex;
   gap: 40px;
 }
 .chartContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: column !important;
+  padding: 10px;
 }
 #chart {
-  width: 58vw;
+  width: 65vw;
   height: 10vh;
 }
+
+
 .ChartFilterButtons {
   position: absolute;
-  bottom: 10px;
+  bottom: 50px;
   margin-left: 20px;
 }
 .chartButton {

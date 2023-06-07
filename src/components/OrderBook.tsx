@@ -1,15 +1,13 @@
-import React from "react";
 import OrderBookTable from "./OrderBookTable";
+import { OrderProps } from "../types/DataType";
 
-interface IProps {
-  selectedCoin: string;
-}
-const OrderBook = ({ selectedCoin }: IProps) => {
+
+const OrderBook = ({ selectedCoin }: OrderProps) => {
   return (
     <div style={{ textAlign: "center" }}>
       <h3>OrderBook</h3>
       <div>
-        <h3>Selected : {selectedCoin}</h3>
+        <h3>{selectedCoin?.slice(1,4)} / {selectedCoin?.slice(4,selectedCoin.length)}</h3>
       </div>
       <OrderBookTable selectedCoin={selectedCoin} />
     </div>
