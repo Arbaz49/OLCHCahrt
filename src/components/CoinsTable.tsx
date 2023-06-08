@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import "../styles/CoinsTable.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,17 +8,55 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { CoinsProps, CoinsType } from "../types/DataType";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Initial_Number } from "../utils/Constants";
+import { getSymbollsData } from "../utils/Services";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function CoinsTable({
-  coinsTableData,
+  
   setselcetedCoin,
 }: CoinsProps) {
-  const [coinIndex,setCoinIndex]=useState<number>(-1);
-  const handleClick=(coin:string,index:number)=>{
+  const navigate=useNavigate()
+  const [coinIndex, setCoinIndex] = useState<string>("tBTCUSD");
+  const location=useLocation()
+  // <h1>{location.pathname}</h1>
+  const handleClick=(coin:string)=>{
     setselcetedCoin(coin);
-    setCoinIndex(index)
+    setCoinIndex(coin)
+    if(location.pathname !=="/"){
+
+      navigate(`/orderbook/${coin}`)
+    }
   }
+  const [coinsData, setCoinsData] = useState<CoinsType[]>([
+    [
+      "",
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+    ],
+  ]);
+
+  useEffect(() => {
+    handleSymbolsData();
+  }, []);
+  const handleSymbolsData = async () => {
+    try {
+      const response = await getSymbollsData();
+      console.log("Symbolsdata", response);
+      setCoinsData(response);
+    } catch (e: unknown) {
+      console.log(e);
+    }
+  };
   return (
     <TableContainer className="table" component={Paper}>
       <Table
@@ -33,19 +72,19 @@ export default function CoinsTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {coinsTableData?.map((row: CoinsType,index) => (
+          {coinsData?.map((row: CoinsType, index) => (
             <TableRow
-              onClick={() => setselcetedCoin(row[0])}
+              onClick={() => handleClick(row[0])}
               className="symbollRow"
               key={row[0]}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              style={coinIndex===index ?{backgroundColor:"aqua"}:{}}
+              style={coinIndex === row[0] ? { backgroundColor: "aqua" } : {}}
             >
               <TableCell className="tableCell" component="th" scope="row">
-                {row[0].slice(1,4)}
+                {row[0].slice(1, 4)}
               </TableCell>
               <TableCell className="tableCell" component="th" scope="row">
-                {row[1]}  {row[0].slice(4,row[0].length)}
+                {row[1]} {row[0].slice(4, row[0].length)}
               </TableCell>
             </TableRow>
           ))}

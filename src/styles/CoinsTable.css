@@ -1,7 +1,9 @@
 .table{
     width:30vw;
-    height:95vh;
+    height:65vh;
     text-align:center;
+    margin-top:10%;
+    margin-right: 5%;
 }
 .ListTable{
 width:30vw

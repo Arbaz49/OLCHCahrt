@@ -24,6 +24,7 @@ export interface ChartProps {
   selectedCoin: string ;
   setTimeFrame: React.Dispatch<React.SetStateAction<string>>;
   setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
+  // updateSelectedCoin?:()=>:void{}
 }
 export interface CandleStickDataType {
   name: string;
@@ -34,7 +35,7 @@ export interface ButtonsType {
   value: string;
 }
 export interface CoinsProps {
-  coinsTableData: CoinsType[];
+  coinsTableData?: CoinsType[];
   setselcetedCoin: React.Dispatch<React.SetStateAction<string>>;
 }
 export interface OrderProps {

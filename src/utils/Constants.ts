@@ -3,6 +3,7 @@ export const Initial_SelectedCoin = "tBTCUSD";
 export const candleStickChartHeight=600;
 export const BASE_URL="https://api-pub.bitfinex.com/v2/";
 export const WS_URL='wss://api-pub.bitfinex.com/ws/2';
+export const Initial_Number=0
 export const buttonsData = [
   {
     lable: "1h",

@@ -65,3 +65,11 @@ table {
   color: white;
   cursor: pointer;
 }
+.redirectBtn{
+  font-size: 20px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 14px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
