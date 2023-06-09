@@ -61,8 +61,7 @@ table {
   width: 5px;
 }
 .symbollRow :hover {
-  background-color: black;
-  color: white;
+
   cursor: pointer;
 }
 .redirectBtn{

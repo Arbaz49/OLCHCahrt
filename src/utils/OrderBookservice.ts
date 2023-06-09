@@ -1,8 +1,7 @@
 export const bidsMap=new Map<number,[number,number,number,number]>();
 
  export const asksMap=new Map<number,[number,number,number,number]>();
- export const bidsArray:unknown[]=[];
- export const asksArray:unknown[]=[];
+
 
 
 const Initial_Total=0;
@@ -12,11 +11,11 @@ const Initial_Total=0;
     if(count !==0){
         if(amount< 0){
 
-            asksArray.push([count,amount,Initial_Total,price]);
+            asksMap.set(price,[count,amount,Initial_Total,price]);
         } 
         else{
 
-            bidsArray.push([count,amount,Initial_Total,price]);   
+            bidsMap.set(price,[count,amount,Initial_Total,price]);   
         }  
     }
  }

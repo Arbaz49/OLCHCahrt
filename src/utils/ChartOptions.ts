@@ -1,4 +1,4 @@
-export const chartOption = (setTooltipRef: Function) => {
+export const chartOption = (setTooltipRef: any) => {
   return {
     plotOptions: {
       candlestick: {

@@ -9,7 +9,7 @@ import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import OrderBookPage from "./pages/OrderBookPage";
 import Header from "./components/Header";
 
-const App: React.FC = () => {
+const Home: React.FC = () => {
   const [timeFrame, setTimeFrame] = useState<string>(Initial_TimeFrame);
   const [selectedCoin, setSelectedCoin] =
     useState<string>(Initial_SelectedCoin);
@@ -58,4 +58,4 @@ const navigateToOrderPage=()=>{
     </>
   );
 };
-export default App;
+export default Home;

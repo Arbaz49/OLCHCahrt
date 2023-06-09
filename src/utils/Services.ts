@@ -4,9 +4,9 @@ import { BASE_URL, WS_URL } from "./Constants";
 const w = new WebSocket(WS_URL);
 
 
-export const getCandlesData = async (timeFrame: string, selecetedCoin: string,loading?:any)=> {
+export const getCandlesData = async (timeFrame: string, selectedCoin: string,loading?:any)=> {
   try {
-    const { data } = await axios.get(`${BASE_URL}candles/trade:${timeFrame}:${selecetedCoin}/hist?limit=999`);
+    const { data } = await axios.get(`${BASE_URL}candles/trade:${timeFrame}:${selectedCoin}/hist?limit=999`);
     console.log("api data", data);
    const response= processChartData(data);
     return { name: "candleData", data: [...response] }; 
@@ -28,7 +28,7 @@ export const getSymbollsData = async () => {
 
 //get order book data based on selectedCoin from websocket
 export const getOrderBookData=(selectedCoin:string)=>{
-  let msg = JSON.stringify({ 
+  const msg = JSON.stringify({ 
             event: 'subscribe', 
             channel: 'book',
             symbol: selectedCoin 

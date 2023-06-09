@@ -1,6 +1,6 @@
 .holcDiv {
   position: absolute;
-  top: 50px;
+  top: 100px;
   left: 430px;
   display: flex;
   gap: 40px;
@@ -11,14 +11,15 @@
   padding: 10px;
 }
 #chart {
+  margin-top: 0px;
   width: 65vw;
-  height: 10vh;
+  height: 8vh;
 }
 
 
 .ChartFilterButtons {
   position: absolute;
-  bottom: 50px;
+  bottom: 0px;
   margin-left: 20px;
 }
 .chartButton {

@@ -11,15 +11,16 @@ import { CoinsProps, CoinsType } from "../types/DataType";
 import { useEffect, useState } from "react";
 import { Initial_Number } from "../utils/Constants";
 import { getSymbollsData } from "../utils/Services";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function CoinsTable({
   
   setselcetedCoin,
 }: CoinsProps) {
-  const navigate=useNavigate()
+  const navigate=useNavigate();
+  const location=useLocation();
+  const {coinid}=useParams();
   const [coinIndex, setCoinIndex] = useState<string>("tBTCUSD");
-  const location=useLocation()
   // <h1>{location.pathname}</h1>
   const handleClick=(coin:string)=>{
     setselcetedCoin(coin);
