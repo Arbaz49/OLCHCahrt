@@ -14,22 +14,22 @@ import { getSymbollsData } from "../utils/Services";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function CoinsTable({
-  
+  selectedCoin,
   setselcetedCoin,
 }: CoinsProps) {
-  const navigate=useNavigate();
-  const location=useLocation();
-  const {coinid}=useParams();
-  const [coinIndex, setCoinIndex] = useState<string>("tBTCUSD");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { coinid } = useParams();
+  const coin = coinid || selectedCoin || "tBTCUSD";
+  const [coinIndex, setCoinIndex] = useState<string>(coin);
   // <h1>{location.pathname}</h1>
-  const handleClick=(coin:string)=>{
+  const handleClick = (coin: string) => {
     setselcetedCoin(coin);
-    setCoinIndex(coin)
-    if(location.pathname !=="/"){
-
-      navigate(`/orderbook/${coin}`)
+    setCoinIndex(coin);
+    if (location.pathname !== "/") {
+      navigate(`/orderbook/${coin}`);
     }
-  }
+  };
   const [coinsData, setCoinsData] = useState<CoinsType[]>([
     [
       "",
@@ -49,6 +49,7 @@ export default function CoinsTable({
   useEffect(() => {
     handleSymbolsData();
   }, []);
+
   const handleSymbolsData = async () => {
     try {
       const response = await getSymbollsData();
@@ -73,13 +74,17 @@ export default function CoinsTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {coinsData?.map((row: CoinsType, index) => (
+          {coinsData?.map((row: CoinsType) => (
             <TableRow
               onClick={() => handleClick(row[0])}
               className="symbollRow"
               key={row[0]}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              style={coinIndex === row[0] ? { backgroundColor: "aqua" } : {}}
+              style={
+                coinIndex === row[0] || selectedCoin === row[0]
+                  ? { backgroundColor: "aqua" }
+                  : {}
+              }
             >
               <TableCell className="tableCell" component="th" scope="row">
                 {row[0].slice(1, 4)}

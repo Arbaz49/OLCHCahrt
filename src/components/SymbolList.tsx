@@ -6,7 +6,19 @@ import { Initial_Number } from "../utils/Constants";
 
 const SymbollsList = (props: ChartProps) => {
   const [coinsList, setCoinsList] = useState<CoinsType[]>([
-    ["", Initial_Number, Initial_Number, Initial_Number, Initial_Number, Initial_Number,Initial_Number, Initial_Number, Initial_Number, Initial_Number, Initial_Number],
+    [
+      "",
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+      Initial_Number,
+    ],
   ]);
 
   useEffect(() => {
@@ -25,6 +37,7 @@ const SymbollsList = (props: ChartProps) => {
   return (
     <div>
       <CoinsTable
+        selectedCoin={props.selectedCoin}
         setselcetedCoin={props.setSelectedCoin}
         coinsTableData={coinsList}
       />
