@@ -106,6 +106,7 @@ import {
 } from "../types/DataType";
 import { WS_URL } from "../utils/Constants";
 import { updateMap } from "../utils/OrderBookservice";
+import { useParams } from "react-router-dom";
 // import { bidsMap, updateMap } from "../utils/OrderBookservice";
 
 const w = new WebSocket(WS_URL);
@@ -115,44 +116,57 @@ export default function OrderBookTable({ selectedCoin }: OrderProps) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const bidsMap = new Map<number, [number, number, number, number]>();
   const asksMap = new Map<number, [number, number, number, number]>();
-  const [bidsMapData, setBidsMapData] =
-    useState<Map<number, [number, number, number, number]>>(bidsMap);
-  const [test, setTest] = useState<any[]>([]);
+  const [bidsMapData, setBidsMapData] = useState<Map<number, [number, number, number, number]>>(bidsMap);
+  const [bidstest, setbidsTest] = useState<any[]>([]);
+const {coinid}=useParams();
+
+  
+  const [wsEvent, setWsEvent] = useState("subscribe");
+  const [chanId, setChanId] = useState(0);
+  const [wsMessage, setWsMessage] = useState({
+    event: wsEvent,
+    channel: "book",
+    symbol: coinid,
+    chanId: chanId,
+  });
   useEffect(() => {
-    const msg = JSON.stringify({
-      event: "subscribe",
-      channel: "book",
-      symbol: selectedCoin,
-    });
+    const msg = JSON.stringify(wsMessage);
     w.onopen = (): void => {
       w.send(msg);
     };
     w.onmessage = (a: MessageEvent<string>): void => {
       const _array = JSON.parse(a.data);
+      setChanId(_array[0]);
       if (Array.isArray(_array) && _array[1] !== "hb") {
         updateMap(_array[1], asksMap, bidsMap);
-        setBidsMapData(bidsMap);
-        setTest([...test, ...bidsMap]);
       }
+      setbidsTest([...bidstest, ...bidsMap]);
     };
-  }, [asksMap, bidsMap, selectedCoin]);
-  console.log("array", bidsMap);
-  console.log("test", test);
-  //rerendering problem agan
-  // alert("table rerendred")
+w.onclose=()=>{
+  w.close();
+}
+
+  }, [asksMap, bidsMap, coinid,selectedCoin]);
+  console.log("bidsmapkeys", [...bidstest]);
   return (
     <>
       <div style={{ display: "flex", width: "40vw", margin: "auto" }}>
         <table className="Mytable" border={0} style={{ padding: "10px" }}>
           <tr style={{ backgroundColor: "aqua" }}>
-            <td>Count</td>
-            <td>Amount</td>
-            <td>Total</td>
-            <td>Price</td>
+            <td style={{ height: "30px" }}>Count</td>
+            <td style={{ height: "30px" }}>Amount</td>
+            <td style={{ height: "30px" }}>Total</td>
+            <td style={{ height: "30px" }}>Price</td>
           </tr>
-          {[...test]
-            .reverse()
-            .slice(0, 19)
+          {[...bidstest]
+             .sort(function (a, b) {
+              if (a[1][3] === b[1][3]) {
+                return 0;
+              } else {
+                return a[1][3] < b[1][3] ? 1 : -1;
+              }
+            })
+            .slice(1, 21)
             .map(([key, value], index) => (
               <tr key={key + index}>
                 <td>{value[Index_Of_Count]}</td>
@@ -169,19 +183,27 @@ export default function OrderBookTable({ selectedCoin }: OrderProps) {
             <td>Amount</td>
             <td>Count</td>
           </tr>
-          {[...test]
-            .reverse()
-            .slice(0, 19)
+          {[...bidstest]
+            .sort(function (a, b) {
+              if (a[1][3] === b[1][3]) {
+                return 0;
+              } else {
+                return a[1][3] < b[1][3] ? -1 : 1;
+              }
+            })
+            .slice(1, 21)
             .map(([key, value], index) => (
               <tr key={key + index}>
-                <td>{value[0]}</td>
-                <td>{value[1]}</td>
-                <td>{value[2]}</td>
-                <td>{value[3]}</td>
+                <td>{value[Index_Of_Price]}</td>
+                <td>{value[Index_Of_Total]}</td>
+                <td>{value[Index_Of_Amount]}</td>
+                <td>{value[Index_Of_Count]}</td>
               </tr>
             ))}
         </table>
       </div>
+      {/* to close ws connection */}
+      <button onClick={() => w.close()}>close connection</button>
     </>
   );
 }

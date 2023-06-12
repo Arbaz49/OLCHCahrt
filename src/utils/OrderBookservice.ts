@@ -18,6 +18,7 @@ export const updateMap = (
   if (count !== 0) {
     if (amount < 0) {
       asksMap.set(price, [count, amount, Initial_Total, price]);
+      // alert(asksMap.get(price))
     } else {
       bidsMap.set(price, [count, amount, Initial_Total, price]);
     }
@@ -77,3 +78,4 @@ export const calcTotalBid = (
     //   }
   }
 };
+

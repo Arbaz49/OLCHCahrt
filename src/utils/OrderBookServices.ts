@@ -13,13 +13,13 @@ let minBid: number;
 let maxBid: number;
 let minAsk: number;
 let maxAsk: number;
-  let  INDEX_OF = {
-  COUNT: 0,
-  AMOUNT: 1,
-  TOTAL: 2,
-  PRICE: 3
-}
- let  LAST_INDEX = 18;
+//   let  INDEX_OF = {
+//   COUNT: 0,
+//   AMOUNT: 1,
+//   TOTAL: 2,
+//   PRICE: 3
+// }
+//  let  LAST_INDEX = 18;
 
 
 // export const calcTotalBid=(index: any, itemValue: [number, number, number, number], list: typeof bidsMap): void=> {
@@ -35,9 +35,8 @@ let maxAsk: number;
 
 
   export const  updateBookMap=(updatedValue: UpdatedValuesFromWs ): void=> {
-      let [price, count, amount] = [...updatedValue];
+    const [price, count, amount] = [...updatedValue];
       if (count != 0) {
-        // alert(price)
         if (amount < 0) {
           asksMap.set(price, [count, Math.abs(amount), INITIAL_TOTAL, price]);
         } else {
@@ -47,15 +46,15 @@ let maxAsk: number;
         asksMap.delete(price);
         bidsMap.delete(price);
       }
-    //  if (updatedValue ) {
-    //   updatedValue.forEach(([price, count, amount]: any) => {
-    //     if (amount < 0) {
-    //       asksMap.set(price, [count, Math.abs(amount), INITIAL_TOTAL, price]);
-    //     } else {
-    //       bidsMap.set(price, [count, amount, INITIAL_TOTAL, price])
-    //     }
-    //   });
-    // }
+     if (updatedValue ) {
+      updatedValue.forEach(([price, count, amount]: any) => {
+        if (amount < 0) {
+          asksMap.set(price, [count, Math.abs(amount), INITIAL_TOTAL, price]);
+        } else {
+          bidsMap.set(price, [count, amount, INITIAL_TOTAL, price])
+        }
+      });
+    }
   } 
 
 

@@ -48,7 +48,8 @@ const Home: React.FC = () => {
         />
         <Route
           path="/orderbook/:coinid"
-          element={<OrderBookPage setSelectedCoin={setSelectedCoin} />}
+          // element={<OrderBookPage setSelectedCoin={setSelectedCoin} />}
+          Component={()=><OrderBookPage setSelectedCoin={setSelectedCoin} />}
         />
       </Routes>
     </>
