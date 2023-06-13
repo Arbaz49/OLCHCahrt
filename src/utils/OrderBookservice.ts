@@ -4,9 +4,10 @@ import { Index_Of_Amount, Index_Of_Total } from "../types/DataType";
 // export const asksMap=new Map<number,[number,number,number,number]>();
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-let minBid = 0;
+// let minBid = 0;
 //  const maxBid = 0;
-
+  export const bidsMap = new Map<number, [number, number, number, number]>();
+  export const asksMap = new Map<number, [number, number, number, number]>();
 const Initial_Total = 0;
 
 export const updateMap = (
@@ -15,15 +16,45 @@ export const updateMap = (
   bidsMap: Map<number, [number, number, number, number]>
 ) => {
   const [price, count, amount] = itemTobeAdd;
-  if (count !== 0) {
-    if (amount < 0) {
-      asksMap.set(price, [count, amount, Initial_Total, price]);
-      // alert(asksMap.get(price))
-    } else {
-      bidsMap.set(price, [count, amount, Initial_Total, price]);
+  if(typeof price==="number" && typeof count==="number" && typeof amount ==="number"){
+
+    if (count !== 0) {
+      if (amount < 0) {
+        asksMap.set(price, [count, amount, Initial_Total, price]);
+      } else {
+        bidsMap.set(price, [count, amount, Initial_Total, price]);
+      }
+    }else {
+      if (amount > 0) {
+        bidsMap.delete(price);
+      } else {
+        asksMap.delete(price);
+      }
     }
   }
 };
+[[1],[2],[3]]
+
+
+export const calculateTotal=(index:number,list:any[],item:[number,number,number,number],tableType:string):void=>{
+// const prev=list[index-1]
+if(tableType=="bids"){
+
+  if(index===0){
+   item[2]=item[1]
+  }else{
+  item[2]=item[1]+list[index][1][2]
+
+}
+}else{
+  if(index===0){
+    item[2]=item[1]
+   }else{
+   item[2]=item[1]+list[index][1][2]
+ 
+ }
+}
+}
 
 //  export const calcTotalBid(index: number, itemValue: [number, number, number, number], list: KeyValue<number, [number, number, number, number]>[]): void {
 //     if (index == 0) {
@@ -61,21 +92,3 @@ type KeyValue = {
 // export const updateBidsMap=(setBidsMapData:React.Dispatch<React.SetStateAction<Map<number, [number, number, number, number]>>>)=>{
 //     setBidsMapData(bidsMap)
 // }
-
-export const calcTotalBid = (
-  index: number,
-  itemValue: [number, number, number, number],
-  list: KeyValue[]
-): void => {
-  if (index === 0) {
-    minBid = itemValue[Index_Of_Amount];
-    itemValue[Index_Of_Total] = itemValue[Index_Of_Amount];
-  } else {
-    itemValue[Index_Of_Total] =
-      list[index - 1].value[Index_Of_Total] + itemValue[Index_Of_Amount];
-    //   if (index === LAST_INDEX) {
-    //     maxBid = itemValue[INDEX_OF.TOTAL];
-    //   }
-  }
-};
-

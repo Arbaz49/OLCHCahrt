@@ -5,7 +5,7 @@ import { OrderProps } from "../types/DataType";
 
 const OrderBook = ({ selectedCoin }: OrderProps) => {
   return (
-    <div style={{display:"flex", textAlign: "center",width:"70vw",margin:"auto" }}>
+    <div style={{display:"flex", textAlign: "center",width:"70vw" }}>
       <div>
       <h3>OrderBook</h3>
       <div>

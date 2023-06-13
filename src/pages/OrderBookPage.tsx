@@ -15,7 +15,7 @@ const OrderBookPage = (props: IProps) => {
   return (
     <>
       <Header/>
-      <div style={{ display: "flex", width: "70vw", margin: "auto" }}>
+      <div style={{ display: "flex", width: "70vw", marginLeft: "200px" }}>
         <CoinsTable setselcetedCoin={props.setSelectedCoin} />
         <OrderBook selectedCoin={coinid} />
       </div>

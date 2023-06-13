@@ -23,7 +23,7 @@ const Home: React.FC = () => {
       <Routes>
         <Route
           path="/"
-          element={
+          Component={()=>
             <>
               <Header />
               <div className="container">
@@ -48,7 +48,6 @@ const Home: React.FC = () => {
         />
         <Route
           path="/orderbook/:coinid"
-          // element={<OrderBookPage setSelectedCoin={setSelectedCoin} />}
           Component={()=><OrderBookPage setSelectedCoin={setSelectedCoin} />}
         />
       </Routes>

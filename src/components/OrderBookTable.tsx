@@ -105,8 +105,9 @@ import {
   OrderProps,
 } from "../types/DataType";
 import { WS_URL } from "../utils/Constants";
-import { updateMap } from "../utils/OrderBookservice";
+import { asksMap, bidsMap, calculateTotal, updateMap } from "../utils/OrderBookservice";
 import { useParams } from "react-router-dom";
+// import { asksMap, bidsMap,} from "../utils/OrderBookServices";
 // import { bidsMap, updateMap } from "../utils/OrderBookservice";
 
 const w = new WebSocket(WS_URL);
@@ -114,13 +115,14 @@ const w = new WebSocket(WS_URL);
 export default function OrderBookTable({ selectedCoin }: OrderProps) {
   // const [asksData, setAsksData] = useState<any[]>([]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const bidsMap = new Map<number, [number, number, number, number]>();
-  const asksMap = new Map<number, [number, number, number, number]>();
-  const [bidsMapData, setBidsMapData] = useState<Map<number, [number, number, number, number]>>(bidsMap);
-  const [bidstest, setbidsTest] = useState<any[]>([]);
-const {coinid}=useParams();
+  // const bidsMap = new Map<number, [number, number, number, number]>();
+  // const asksMap = new Map<number, [number, number, number, number]>();
+  // const [bidsMapData, setBidsMapData] =
+    // useState<Map<number, [number, number, number, number]>>(bidsMap);
 
-  
+  const [bidstest, setbidsTest] = useState<any[]>([]);
+  const { coinid } = useParams();
+
   const [wsEvent, setWsEvent] = useState("subscribe");
   const [chanId, setChanId] = useState(0);
   const [wsMessage, setWsMessage] = useState({
@@ -139,18 +141,17 @@ const {coinid}=useParams();
       setChanId(_array[0]);
       if (Array.isArray(_array) && _array[1] !== "hb") {
         updateMap(_array[1], asksMap, bidsMap);
+        setbidsTest([...bidstest, ...bidsMap]);
       }
-      setbidsTest([...bidstest, ...bidsMap]);
     };
-w.onclose=()=>{
-  w.close();
-}
 
-  }, [asksMap, bidsMap, coinid,selectedCoin]);
-  console.log("bidsmapkeys", [...bidstest]);
+  }, [asksMap, bidsMap, coinid, selectedCoin]);
+  console.log("bidsmapkeys", bidsMap);
+  const bids=[...bidstest]
   return (
     <>
       <div style={{ display: "flex", width: "40vw", margin: "auto" }}>
+        {/* bids table */}
         <table className="Mytable" border={0} style={{ padding: "10px" }}>
           <tr style={{ backgroundColor: "aqua" }}>
             <td style={{ height: "30px" }}>Count</td>
@@ -159,23 +160,25 @@ w.onclose=()=>{
             <td style={{ height: "30px" }}>Price</td>
           </tr>
           {[...bidstest]
-             .sort(function (a, b) {
-              if (a[1][3] === b[1][3]) {
-                return 0;
-              } else {
-                return a[1][3] < b[1][3] ? 1 : -1;
-              }
+            .sort(function (a, b) {
+              if (a[1][3] === b[1][3])  return 0;
+               else   return a[1][3] < b[1][3] ? 1 : -1;  
             })
             .slice(1, 21)
             .map(([key, value], index) => (
               <tr key={key + index}>
                 <td>{value[Index_Of_Count]}</td>
-                <td>{value[Index_Of_Amount]}</td>
-                <td>{value[Index_Of_Total]}</td>
+                <td>{value[Index_Of_Amount].toFixed(3)}</td>
+                <td>{calculateTotal(index,bids.sort(function (a, b) {
+              if (a[1][3] === b[1][3])  return 0;
+               else   return a[1][3] < b[1][3] ? 1 : -1;  
+            }),value,"bids")}{value[Index_Of_Total].toFixed(3)}</td>
                 <td>{value[Index_Of_Price]}</td>
               </tr>
             ))}
         </table>
+
+        {/* asks table */}
         <table className="Mytable" border={0} style={{}}>
           <tr style={{ backgroundColor: "aqua" }}>
             <td>Price</td>
@@ -183,7 +186,7 @@ w.onclose=()=>{
             <td>Amount</td>
             <td>Count</td>
           </tr>
-          {[...bidstest]
+          {bids
             .sort(function (a, b) {
               if (a[1][3] === b[1][3]) {
                 return 0;
@@ -194,16 +197,31 @@ w.onclose=()=>{
             .slice(1, 21)
             .map(([key, value], index) => (
               <tr key={key + index}>
-                <td>{value[Index_Of_Price]}</td>
-                <td>{value[Index_Of_Total]}</td>
-                <td>{value[Index_Of_Amount]}</td>
+                <td style={{width:"300px"}}>{value[Index_Of_Price]}</td>
+              
+                   <td>{calculateTotal(index,bids .sort(function (a, b) {
+              if (a[1][3] === b[1][3]) {
+                return 0;
+              } else {
+                return a[1][3] < b[1][3] ? -1 : 1;
+              }
+            }),value,"asks")}{value[Index_Of_Total].toFixed(3)} </td>
+                  {/* <td>{calculateTotal(index,value,"bids",[...bidstest].sort(function (a, b) {
+                    if (a[1][3] === b[1][3]) {
+                      return 0;
+                    } else {
+                      return a[1][3] < b[1][3] ? -1 : 1;
+                    }
+                  }))}</td> */}
+                
+                <td>{value[Index_Of_Amount].toFixed(3)}</td>
                 <td>{value[Index_Of_Count]}</td>
               </tr>
             ))}
         </table>
       </div>
       {/* to close ws connection */}
-      <button onClick={() => w.close()}>close connection</button>
+      {/* <button onClick={() => w.close()}>close connection</button> */}
     </>
   );
 }
