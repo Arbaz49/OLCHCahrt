@@ -6,7 +6,7 @@ import {
   Index_Of_Total,
   OrderProps,
 } from "../types/DataType";
-import { WS_URL } from "../utils/Constants";
+// import { WS_URL } from "../utils/Constants";
 import {
   asksMap,
   bidsMap,
@@ -14,35 +14,60 @@ import {
   updateMap,
 } from "../utils/OrderBookservice";
 import { useParams } from "react-router-dom";
+import { w } from "./CoinsTable";
 
-const w = new WebSocket(WS_URL);
+// const w = new WebSocket(WS_URL);
 
-export default function OrderBookTable({ selectedCoin }: OrderProps) {
+export default function OrderBookTable({ selectedCoin ,setChanId}: OrderProps) {
   const [bidsTableData, setBidsTableData] = useState<any[]>([]);
   const [asksTableData, setAsksTableData] = useState<any[]>([]);
-
   const { coinid } = useParams();
+// const handleWsMessage=(coinid:string|undefined,chanId:number)=>{
+//   w.send(JSON.stringify({
+//     event:"unsubscribe",
+//     channel:"book",
+//     symbol:coinid,
+//     chanId:chanId
+//   }));
+//   w.send(JSON.stringify({
+//     event:"subscribe",
+//     channel:"book",
+//     symbol:coinid,
+//     chanId:0
+//   }));
+// asksMap.clear();
+// bidsMap.clear();
 
-  const [wsEvent, setWsEvent] = useState("subscribe");
-  const [chanId, setChanId] = useState(0);
-  const [wsMessage, setWsMessage] = useState({
-    event: wsEvent,
+// }
+  // const [wsEvent, setWsEvent] = useState("subscribe");
+  const [chanId] = useState(0);
+  const [wsMessage] = useState({
+    event: "subscribe",
     channel: "book",
-    symbol: coinid,
+    symbol: selectedCoin,
     chanId: chanId,
   });
+  useEffect(()=>{
+// alert(selectedCoin)
+asksMap.clear();
+bidsMap.clear();
+  },[selectedCoin]);
+
+
   useEffect(() => {
     const msg = JSON.stringify(wsMessage);
     w.onopen = (): void => {
       w.send(msg);
     };
-    w.onmessage = (a: MessageEvent<string>): void => {
+    w.onmessage = (a: MessageEvent<string>):void=> {
+     
       const _array = JSON.parse(a.data);
       setChanId(_array[0]);
+      // getChanID(_array[0])
       if (Array.isArray(_array) && _array[1] !== "hb") {
         updateMap(_array[1], asksMap, bidsMap);
-        setBidsTableData([...bidsTableData, ...bidsMap]);
-        setAsksTableData([...asksTableData, ...asksMap]);
+       setBidsTableData([...bidsTableData, ...bidsMap]);
+       setAsksTableData([...asksTableData, ...asksMap]);
       }
     };
   }, [asksMap, bidsMap, coinid, selectedCoin]);
@@ -50,9 +75,10 @@ export default function OrderBookTable({ selectedCoin }: OrderProps) {
   const asks = [...asksTableData];
   return (
     <>
+
       <div style={{ display: "flex", width: "40vw", margin: "auto" }}>
         {/* bids table */}
-        <table className="Mytable" border={0} style={{ padding: "10px" }}>
+        <table className="Mytable" border={0} style={{ padding: "5px" }}>
           <tr style={{ backgroundColor: "aqua" }}>
             <td style={{ height: "30px" }}>Count</td>
             <td style={{ height: "30px" }}>Amount</td>

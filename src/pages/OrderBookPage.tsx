@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState } from "react";
 import OrderBook from "../components/OrderBook";
 import { useNavigate, useParams } from "react-router-dom";
 import CoinsTable from "../components/CoinsTable";
@@ -12,12 +12,15 @@ const OrderBookPage = (props: IProps) => {
   const navigateToOrderPage = () => {
     navigate(`/`);
   };
+  const [chanId,setChanId] = useState(0);
+
+
   return (
     <>
       <Header/>
       <div style={{ display: "flex", width: "70vw", marginLeft: "200px" }}>
-        <CoinsTable setselcetedCoin={props.setSelectedCoin} />
-        <OrderBook selectedCoin={coinid} />
+        <CoinsTable setSelectedCoin={props.setSelectedCoin} chanId={chanId} />
+        <OrderBook selectedCoin={coinid} setChanId={setChanId}  />
       </div>
       <button onClick={navigateToOrderPage} className="redirectBtn">
         Go To Home

@@ -9,12 +9,13 @@ export let maxBid = 0;
 export const bidsMap = new Map<number, [number, number, number, number]>();
 export const asksMap = new Map<number, [number, number, number, number]>();
 const Initial_Total = 0;
-
+type data=[number,number,number]
 export const updateMap = (
   itemTobeAdd: [number, number, number],
   asksMap: Map<number, [number, number, number, number]>,
   bidsMap: Map<number, [number, number, number, number]>
 ) => {
+ 
   const [price, count, amount] = itemTobeAdd;
   if (
     typeof price === "number" && //sometime data is coming in weird format like "1.038399.73783.383" thats why checking type here
@@ -33,6 +34,13 @@ export const updateMap = (
       } else {
         asksMap.delete(price);
       }
+      // itemTobeAdd.forEach(([price, count, amount]:any):void => {
+      //   if (amount < 0) {
+      //     asksMap.set(price, [count, Math.abs(amount), Initial_Total, price]);
+      //   } else { // amount > 0
+      //     bidsMap.set(price, [count, amount, Initial_Total, price])
+      //   }
+      // });
     }
   }
 };

@@ -9,13 +9,16 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { CoinsProps, CoinsType } from "../types/DataType";
 import { useEffect, useState } from "react";
-import { Initial_Number } from "../utils/Constants";
-import { getSymbollsData } from "../utils/Services";
+import { Initial_Number, WS_URL } from "../utils/Constants";
+import { getSymbollsData as getSymbolsData } from "../utils/Services";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { asksMap, bidsMap } from "../utils/OrderBookservice";
+export const w = new WebSocket(WS_URL);
 
 export default function CoinsTable({
   selectedCoin,
-  setselcetedCoin,
+  setSelectedCoin,
+  chanId
 }: CoinsProps) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,12 +27,33 @@ export default function CoinsTable({
   const [coinIndex, setCoinIndex] = useState<string>(coin);
   // <h1>{location.pathname}</h1>
   const handleClick = (coin: string) => {
-    setselcetedCoin(coin);
+    setSelectedCoin(coin);
     setCoinIndex(coin);
     if (location.pathname !== "/") {
       navigate(`/orderbook/${coin}`);
     }
+    handleWsMessage(chanId);
   };
+
+  const handleWsMessage=(chanId:number)=>{
+    
+    w.send(JSON.stringify({
+      event:"unsubscribe",
+      channel:"book",
+      symbol:coinid,
+      chanId:chanId
+    }));
+    asksMap.clear() ;
+    bidsMap.clear()
+    w.send(JSON.stringify({
+      event:"subscribe",
+      channel:"book",
+      symbol:coinid,
+      chanId:0
+    }));
+ 
+  
+  }
   const [coinsData, setCoinsData] = useState<CoinsType[]>([
     [
       "",
@@ -52,7 +76,7 @@ export default function CoinsTable({
 
   const handleSymbolsData = async () => {
     try {
-      const response = await getSymbollsData();
+      const response = await getSymbolsData();
       console.log("Symbolsdata", response);
       setCoinsData(response);
     } catch (e: unknown) {

@@ -3,7 +3,7 @@ import OrderBookTable from "./OrderBookTable";
 import { OrderProps } from "../types/DataType";
 
 
-const OrderBook = ({ selectedCoin }: OrderProps) => {
+const OrderBook = ({ selectedCoin,setChanId }: OrderProps) => {
   return (
     <div style={{display:"flex", textAlign: "center",width:"70vw" }}>
       <div>
@@ -11,7 +11,7 @@ const OrderBook = ({ selectedCoin }: OrderProps) => {
       <div>
         <h3>{selectedCoin?.slice(1,4)} / {selectedCoin?.slice(4,selectedCoin.length)}</h3>
       </div>
-      <OrderBookTable selectedCoin={selectedCoin} />
+      <OrderBookTable setChanId={setChanId} selectedCoin={selectedCoin} />
       </div>
     </div> 
   );

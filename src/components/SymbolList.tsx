@@ -38,8 +38,9 @@ const SymbollsList = (props: ChartProps) => {
     <div>
       <CoinsTable
         selectedCoin={props.selectedCoin}
-        setselcetedCoin={props.setSelectedCoin}
+        setSelectedCoin={props.setSelectedCoin}
         coinsTableData={coinsList}
+        chanId={0}
       />
     </div>
   );

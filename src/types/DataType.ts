@@ -37,10 +37,12 @@ export interface ButtonsType {
 export interface CoinsProps {
   selectedCoin?:string,
   coinsTableData?: CoinsType[];
-  setselcetedCoin: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
+  chanId:number
 }
 export interface OrderProps {
   selectedCoin: string|undefined;
+  setChanId:React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const Index_Of_Amount=1
