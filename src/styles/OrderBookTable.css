@@ -1,0 +1,8 @@
+.OrderBookConatiner{
+ display: flex;
+  width: 40vw;
+   margin: auto;
+}
+.h30{
+    height: 30px;
+}

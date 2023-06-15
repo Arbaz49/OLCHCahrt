@@ -74,7 +74,9 @@ table {
 }
 .header{
 background-color:aqua;
-height:50px;display:flex;align-items:center;
+height:50px;display:flex;
+justify-content: space-between;
+align-items:center;
 padding:0px 10px;
 }
 tr td{

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const chartOption = (setTooltipRef: any) => {
   return {
     plotOptions: {
@@ -34,6 +35,7 @@ export const chartOption = (setTooltipRef: any) => {
       cssClass: "my-tooltip",
       enabled: true,
       custom: function ({
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         series,
         seriesIndex,
         dataPointIndex,
@@ -51,7 +53,6 @@ export const chartOption = (setTooltipRef: any) => {
           o: w.globals.seriesCandleO[seriesIndex][dataPointIndex],
           l: w.globals.seriesCandleL[seriesIndex][dataPointIndex],
         });
- 
       },
     },
     xaxis: {

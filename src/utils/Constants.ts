@@ -27,3 +27,4 @@ export const buttonsData = [
   },
 ];
 
+export const Index_Of_valueInMap = 1;

@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import "../styles/OrderBookTable.css"
 import {
   Index_Of_Amount,
   Index_Of_Count,
@@ -6,39 +9,41 @@ import {
   Index_Of_Total,
   OrderProps,
 } from "../types/DataType";
-// import { WS_URL } from "../utils/Constants";
 import {
   asksMap,
   bidsMap,
   calculateTotal,
   updateMap,
 } from "../utils/OrderBookservice";
-import { useParams } from "react-router-dom";
 import { w } from "./CoinsTable";
+import Loader from "./Loader";
+import { Index_Of_valueInMap } from "../utils/Constants";
 
-// const w = new WebSocket(WS_URL);
 
-export default function OrderBookTable({ selectedCoin ,setChanId}: OrderProps) {
+export default function OrderBookTable({
+  selectedCoin,
+  setChanId,
+}: OrderProps) {
   const [bidsTableData, setBidsTableData] = useState<any[]>([]);
   const [asksTableData, setAsksTableData] = useState<any[]>([]);
-  const { coinid } = useParams();
-// const handleWsMessage=(coinid:string|undefined,chanId:number)=>{
-//   w.send(JSON.stringify({
-//     event:"unsubscribe",
-//     channel:"book",
-//     symbol:coinid,
-//     chanId:chanId
-//   }));
-//   w.send(JSON.stringify({
-//     event:"subscribe",
-//     channel:"book",
-//     symbol:coinid,
-//     chanId:0
-//   }));
-// asksMap.clear();
-// bidsMap.clear();
+  // const { coinid } = useParams();
+  // const handleWsMessage=(coinid:string|undefined,chanId:number)=>{
+  //   w.send(JSON.stringify({
+  //     event:"unsubscribe",
+  //     channel:"book",
+  //     symbol:coinid,
+  //     chanId:chanId
+  //   }));
+  //   w.send(JSON.stringify({
+  //     event:"subscribe",
+  //     channel:"book",
+  //     symbol:coinid,
+  //     chanId:0
+  //   }));
+  // asksMap.clear();
+  // bidsMap.clear();
 
-// }
+  // }
   // const [wsEvent, setWsEvent] = useState("subscribe");
   const [chanId] = useState(0);
   const [wsMessage] = useState({
@@ -47,108 +52,149 @@ export default function OrderBookTable({ selectedCoin ,setChanId}: OrderProps) {
     symbol: selectedCoin,
     chanId: chanId,
   });
-  useEffect(()=>{
-// alert(selectedCoin)
-asksMap.clear();
-bidsMap.clear();
-  },[selectedCoin]);
-
+  useEffect(() => {
+    asksMap.clear();
+    bidsMap.clear();
+    setBidsTableData([]);
+    setAsksTableData([])
+  }, [selectedCoin]);
 
   useEffect(() => {
     const msg = JSON.stringify(wsMessage);
     w.onopen = (): void => {
       w.send(msg);
     };
-    w.onmessage = (a: MessageEvent<string>):void=> {
-     
+    w.onmessage = (a: MessageEvent<string>): void => {
       const _array = JSON.parse(a.data);
       setChanId(_array[0]);
-      // getChanID(_array[0])
       if (Array.isArray(_array) && _array[1] !== "hb") {
         updateMap(_array[1], asksMap, bidsMap);
-       setBidsTableData([...bidsTableData, ...bidsMap]);
-       setAsksTableData([...asksTableData, ...asksMap]);
+        setBidsTableData([...bidsTableData, ...bidsMap]);
+        setAsksTableData([...asksTableData, ...asksMap]);
       }
     };
-  }, [asksMap, bidsMap, coinid, selectedCoin]);
+  }, [asksMap, bidsMap, selectedCoin]);
   const bids = [...bidsTableData];
   const asks = [...asksTableData];
   return (
     <>
-
-      <div style={{ display: "flex", width: "40vw", margin: "auto" }}>
+      <div className="OrderBookConatiner" >
         {/* bids table */}
-        <table className="Mytable" border={0} style={{ padding: "5px" }}>
-          <tr style={{ backgroundColor: "aqua" }}>
-            <td style={{ height: "30px" }}>Count</td>
-            <td style={{ height: "30px" }}>Amount</td>
-            <td style={{ height: "30px" }}>Total</td>
-            <td style={{ height: "30px" }}>Price</td>
-          </tr>
-          {[...bidsTableData]
-            .sort((currentRow, nextRow)=>{
-              if (currentRow[1][Index_Of_Price] === nextRow[1][Index_Of_Price]) return 0;
-              else return currentRow[1][3] < nextRow[1][3] ? 1 : -1})
-            .slice(1, 21)
-            .map(([key, value], index) => {
-              return (
-                <tr key={key + index} style={{}}>
-                  <td>{value[Index_Of_Count]}</td>
-                  <td>{value[Index_Of_Amount].toFixed(3)}</td>
-                  <td>
-                    {calculateTotal(
-                      index,
-                      bids.sort(function (a, b) {
-                        if (a[1][3] === b[1][3]) return 0;
-                        else return a[1][3] < b[1][3] ? 1 : -1;
-                      }),
-                      value,
-                      "bids"
-                    )}
-                    {value[Index_Of_Total].toFixed(3)}
-                  </td>
-                  <td>{value[Index_Of_Price]}</td>
-                </tr>
-              );
-            })}
-        </table>
-
-        {/* asks table */}
-        <table className="Mytable" border={0} style={{ padding: "10px" }}>
-          <tr style={{ backgroundColor: "aqua" }}>
-            <td style={{ height: "30px" }}>Price</td>
-            <td style={{ height: "30px" }}>Total</td>
-            <td style={{ height: "30px" }}>Amount</td>
-            <td style={{ height: "30px" }}>Count</td>
-          </tr>
-          {[...asksTableData]
-            .sort(function (currentRow, nextRow) {
-              if (currentRow[1][3] === nextRow[1][3]) return 0;
-               else  return currentRow[1][3] < nextRow[1][3] ? -1 : 1})
-            .slice(1, 21)
-            .map(([key, value], index) => (
-              <tr key={key + index}>
-                <td style={{ width: "300px" }}>{value[Index_Of_Price]}</td>
-                <td>
-                  {calculateTotal(
-                    index,
-                    asks.sort(function (a, b) {
-                      if (a[1][3] === b[1][3]) {
-                        return 0;
-                      } else {
-                        return a[1][3] < b[1][3] ? -1 : 1;
-                      }
-                    }),
-                    value,
-                    "asks"
-                  )}
-                  {value[Index_Of_Total].toFixed(3)}{" "}
-                </td>
-                <td>{value[Index_Of_Amount].toFixed(3)}</td>
-                <td>{value[Index_Of_Count]}</td>
+        {bidsTableData.length > 1 && asksTableData.length > 1 ? (
+          <>
+            <table className="Mytable" border={0} style={{ padding: "5px" }}>
+              <tr style={{ backgroundColor: "aqua" }}>
+                <td className="h30">Count</td>
+                <td className="h30">Amount</td>
+                <td className="h30">Total</td>
+                <td className="h30">Price</td>
               </tr>
-            ))}
-        </table>
+              {[...bidsTableData]
+                .sort((currentRow, nextRow) => {
+                  if (
+                    currentRow[Index_Of_valueInMap][Index_Of_Price] ===
+                    nextRow[1][Index_Of_Price]
+                  )
+                    return 0;
+                  else
+                    return currentRow[Index_Of_valueInMap][Index_Of_Price] <
+                      nextRow[Index_Of_valueInMap][Index_Of_Price]
+                      ? 1
+                      : -1;
+                })
+                .slice(1, 21)
+                .map(([key, value], index) => {
+                  return (
+                    <tr key={key + index} style={{}}>
+                      <td>{value[Index_Of_Count]}</td>
+                      <td>{value[Index_Of_Amount].toFixed(3)}</td>
+                      <td>
+                        {calculateTotal(
+                          index,
+                          bids.sort(function (currentRow, nextRow) {
+                            if (
+                              currentRow[Index_Of_valueInMap][
+                                Index_Of_Price
+                              ] === nextRow[Index_Of_valueInMap][Index_Of_Price]
+                            )
+                              return 0;
+                            else
+                              return currentRow[Index_Of_valueInMap][
+                                Index_Of_Price
+                              ] < nextRow[Index_Of_valueInMap][Index_Of_Price]
+                                ? 1
+                                : -1;
+                          }),
+                          value,
+                          "bids"
+                        )}
+                        {value[Index_Of_Total].toFixed(3)}
+                      </td>
+                      <td>{value[Index_Of_Price]}</td>
+                    </tr>
+                  );
+                })}
+            </table>
+
+            {/* asks table */}
+            <table className="Mytable" border={0} style={{ padding: "5px" }}>
+              <tr style={{ backgroundColor: "aqua" }}>
+                <td className="h30" >Price</td>
+                <td className="h30" >Total</td>
+                <td className="h30" >Amount</td>
+                <td className="h30" >Count</td>
+              </tr>
+              {[...asksTableData]
+                .sort(function (currentRow, nextRow) {
+                  if (
+                    currentRow[Index_Of_valueInMap][Index_Of_Price] ===
+                    nextRow[Index_Of_valueInMap][Index_Of_Price]
+                  )
+                    return 0;
+                  else
+                    return currentRow[Index_Of_valueInMap][Index_Of_Price] <
+                      nextRow[Index_Of_valueInMap][Index_Of_Price]
+                      ? -1
+                      : 1;
+                })
+                .slice(1, 21)
+                .map(([key, value], index) => (
+                  <tr key={key + index}>
+                    <td style={{ width: "300px" }}>{value[Index_Of_Price]}</td>
+                    <td>
+                      {calculateTotal(
+                        index,
+                        asks.sort(function (currentRow, nextRow) {
+                          if (
+                            currentRow[Index_Of_valueInMap][Index_Of_Price] ===
+                            nextRow[Index_Of_valueInMap][Index_Of_Price]
+                          ) {
+                            return 0;
+                          } else {
+                            return currentRow[Index_Of_valueInMap][
+                              Index_Of_Price
+                            ] < nextRow[Index_Of_valueInMap][Index_Of_Price]
+                              ? -1
+                              : 1;
+                          }
+                        }),
+                        value,
+                        "asks"
+                      )}
+                      {value[Index_Of_Total].toFixed(3)}{" "}
+                    </td>
+                    <td>{value[Index_Of_Amount].toFixed(3)}</td>
+                    <td>{value[Index_Of_Count]}</td>
+                  </tr>
+                ))}
+            </table>
+          </>
+        ) : (
+          <>
+            <h4 style={{textAlign:"center"}}> Preparing Data Loading...</h4>
+            <Loader />
+          </>
+        )}
       </div>
     </>
   );

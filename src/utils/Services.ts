@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios"
 import { processChartData } from "./ProcessData";
 import { BASE_URL, WS_URL } from "./Constants";
 const w = new WebSocket(WS_URL);
 
 
-export const getCandlesData = async (timeFrame: string, selectedCoin: string,loading?:any)=> {
+export const getCandlesData = async (timeFrame: string, selectedCoin: string)=> {
   try {
     const { data } = await axios.get(`${BASE_URL}candles/trade:${timeFrame}:${selectedCoin}/hist?limit=999`);
     console.log("api data", data);
