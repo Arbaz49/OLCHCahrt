@@ -28,3 +28,4 @@ export const buttonsData = [
 ];
 
 export const Index_Of_valueInMap = 1;
+export const Initial_TooltipValue=0.0;

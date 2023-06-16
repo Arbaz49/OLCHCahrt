@@ -7,20 +7,20 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import {CoinsType } from "../types/DataType";
+import { CoinsType } from "../types/DataType";
 import { useEffect, useState } from "react";
 import { Initial_Number, WS_URL } from "../utils/Constants";
-import { getSymbollsData as getSymbolsData } from "../utils/Services";
-import { useLocation, useNavigate} from "react-router-dom";
+import { getSymbolsData } from "../utils/Services";
+import { useLocation, useNavigate } from "react-router-dom";
 import { asksMap, bidsMap } from "../utils/OrderBookservice";
-import {IoAnalytics} from "react-icons/io5";
+// import { IoAnalytics } from "react-icons/io5";
 
 export const w = new WebSocket(WS_URL);
 interface CoinsProps {
-  selectedCoin:string,
+  selectedCoin: string;
   coinsTableData?: CoinsType[];
   setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
-  chanId:number
+  chanId: number;
 }
 export default function CoinsTable({
   selectedCoin,
@@ -29,22 +29,20 @@ export default function CoinsTable({
 }: CoinsProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const coin = selectedCoin 
-  const [coinIndex, setCoinIndex] = useState<string>(coin);
+  const coin = selectedCoin;
 
   const handleClick = (symbol: string) => {
-    setCoinIndex(symbol);
     setSelectedCoin(symbol);
-    handleWsMessage(chanId,symbol);
-    if(location.pathname!=="/"){
-      navigate(`/orderbook`);
-    }
+    handleWsMessage(chanId, symbol);
+    // if (location.pathname !== "/") {
+    //   navigate(`/orderbook`);
+    // }
   };
 
-  const handleWsMessage =(chanId: number,coin:string) => {
+  const handleWsMessage = (chanId: number, coin: string) => {
     asksMap.clear();
     bidsMap.clear();
-   w.send(
+    w.send(
       JSON.stringify({
         event: "unsubscribe",
         channel: "book",
@@ -90,44 +88,79 @@ export default function CoinsTable({
       console.log(e);
     }
   };
+  const Index_Of_Symbol=0;
+  const Index_Of_Price=1;
   return (
-    <TableContainer className="table" component={Paper}>
+    <TableContainer
+      className="table"
+      sx={{
+        boxShadow: "14px 16px 15px 2px rgba(0,0,0,0.75)",
+        border: "1px solid black",
+        "&::-webkit-scrollbar": {
+          width: 7,
+        },
+        "&::-webkit-scrollbar-track": {
+          backgroundColor: "grey",
+          borderRadius: "12px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "#171312",
+          height: 100,
+          borderRadius: 2,
+        },
+      }}
+      style={{ maxHeight: 550, maxWidth: 300 }}
+      component={Paper}
+    >
       <Table
+        stickyHeader
         className="ListTable"
-        sx={{ maxWidth: 100, minHeight: 300 }}
+        component={Paper}
         size="medium"
         aria-label="a dense table"
       >
         <TableHead>
           <TableRow>
-            <TableCell className="tableCell">Coin</TableCell>
-            <TableCell className="tableCell">CoinPrice</TableCell>
-            <TableCell className="tableCell"></TableCell>
+            <TableCell align="center"
+              style={{
+                backgroundColor: "aqua",
+                borderBottom: "1px solid black",
+                fontWeight:"bold",
+                fontSize:"17px"
+              }}
+              className="tableCell"
+            >
+              Coin
+            </TableCell>
+            <TableCell align="center"
+              style={{
+                backgroundColor: "aqua",
+                borderBottom: "1px solid black",
+                fontWeight:"bold",
+                fontSize:"17px"
+              }}
+              className="tableCell"
+            >
+              CoinPrice
+            </TableCell>
+          
           </TableRow>
         </TableHead>
         <TableBody>
           {coinsData?.map((row: CoinsType) => (
             <TableRow
-            onClick={() => handleClick(row[0])}
-
+              onClick={() => handleClick(row[Index_Of_Symbol])}
               className="symbollRow"
-              key={row[0]}
-              // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              style={
-                row[0] === coin 
-                  ? { backgroundColor: "aqua" }
-                  : {}
-              }
+              key={row[Index_Of_Symbol]}
+              style={row[Index_Of_Symbol] === coin ? { backgroundColor: "#a5e5e5" } : {}}
             >
-              <TableCell 
-              className="tableCell" component="th" scope="row">
-                {row[0].slice(1, 4)}
+              <TableCell align="center" className="tableCell" component="th" scope="row">
+                {row[Index_Of_Symbol].slice(1, 4)}
               </TableCell>
-              <TableCell
-              className="tableCell" component="th" scope="row">
-                {row[1]} {row[0].slice(4, row[0].length)}
+              <TableCell align="center" className="tableCell" component="th" scope="row">
+                {row[Index_Of_Price]} {row[Index_Of_Symbol].slice(4, row[Index_Of_Symbol].length)}
               </TableCell>
-              <TableCell><IoAnalytics/></TableCell>
+         
             </TableRow>
           ))}
         </TableBody>

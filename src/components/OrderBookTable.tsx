@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import "../styles/OrderBookTable.css"
+import "../styles/OrderBookTable.css";
 import {
   Index_Of_Amount,
   Index_Of_Count,
@@ -18,7 +18,6 @@ import {
 import { w } from "./CoinsTable";
 import Loader from "./Loader";
 import { Index_Of_valueInMap } from "../utils/Constants";
-
 
 export default function OrderBookTable({
   selectedCoin,
@@ -56,7 +55,7 @@ export default function OrderBookTable({
     asksMap.clear();
     bidsMap.clear();
     setBidsTableData([]);
-    setAsksTableData([])
+    setAsksTableData([]);
   }, [selectedCoin]);
 
   useEffect(() => {
@@ -78,7 +77,7 @@ export default function OrderBookTable({
   const asks = [...asksTableData];
   return (
     <>
-      <div className="OrderBookConatiner" >
+      <div className="OrderBookConatiner">
         {/* bids table */}
         {bidsTableData.length > 1 && asksTableData.length > 1 ? (
           <>
@@ -139,10 +138,10 @@ export default function OrderBookTable({
             {/* asks table */}
             <table className="Mytable" border={0} style={{ padding: "5px" }}>
               <tr style={{ backgroundColor: "aqua" }}>
-                <td className="h30" >Price</td>
-                <td className="h30" >Total</td>
-                <td className="h30" >Amount</td>
-                <td className="h30" >Count</td>
+                <td className="h30">Price</td>
+                <td className="h30">Total</td>
+                <td className="h30">Amount</td>
+                <td className="h30">Count</td>
               </tr>
               {[...asksTableData]
                 .sort(function (currentRow, nextRow) {
@@ -191,7 +190,7 @@ export default function OrderBookTable({
           </>
         ) : (
           <>
-            <h4 style={{textAlign:"center"}}> Preparing Data Loading...</h4>
+            <h4 style={{ textAlign: "center" }}> Preparing Data...</h4>
             <Loader />
           </>
         )}

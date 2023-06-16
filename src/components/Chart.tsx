@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { memo, useEffect, useState } from "react";
 import "../styles/Chart.css";
 import { getCandlesData } from "../utils/Services";
@@ -7,11 +9,9 @@ import ReactApexChart from "react-apexcharts";
 
 import {
   ButtonsType,
-  CandleStickDataType,
   ChartProps,
 } from "../types/DataType";
 import { buttonsData, candleStickChartHeight } from "../utils/Constants";
-import TooltipDeatails from "./TooltipDeatails";
 import { chartOption } from "../utils/ChartOptions";
 
 interface IProps extends ChartProps {
@@ -19,8 +19,6 @@ interface IProps extends ChartProps {
 }
 
 const Chart = (props: IProps) => {
-  // const [CandleSticChartData, setCandleSticChartData] =
-  //   useState<CandleStickDataType>({ name: "", data: [] });
   const [CandleSticChartData, setCandleSticChartData] = useState<any>({
     name: "",
     data: [],
@@ -31,15 +29,12 @@ const Chart = (props: IProps) => {
       props.timeFrame,
       props.selectedCoin,
     );
-    console.log("myData", response);
     setCandleSticChartData(response);
-
   };
 
   useEffect(() => {
     handleCandlesData();
   }, [props.selectedCoin, props.timeFrame]);
-
   const options: any = chartOption(props.setToolTip);
 
   return (

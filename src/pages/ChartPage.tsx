@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../components/Header'
-import SymbollsList from '../components/SymbolList'
+import SymbolsList from '../components/SymbolList'
 import ChartContainer from '../components/ChartContainer'
 
 interface IProps{
@@ -18,7 +18,7 @@ const HomePage = (props:IProps) => {
     <>
               <Header selectedCoin={props.selectedCoin} />
               <div className="container">
-                <SymbollsList
+                <SymbolsList
                   timeFrame={props.timeFrame}
                   selectedCoin={props.selectedCoin}
                   setTimeFrame={props.setTimeFrame}
@@ -31,7 +31,6 @@ const HomePage = (props:IProps) => {
                   setSelectedCoin={props.setSelectedCoin}
                 />
               </div>
-          
             </>
   )
 }

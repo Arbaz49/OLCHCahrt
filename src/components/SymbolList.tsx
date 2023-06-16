@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getSymbollsData } from "../utils/Services";
+import { getSymbolsData } from "../utils/Services";
 import CoinsTable from "./CoinsTable";
 import {CoinsType } from "../types/DataType";
 import { Initial_Number } from "../utils/Constants";
@@ -34,8 +34,7 @@ const SymbollsList = (props: ChartProps) => {
 
   const handleSymbolsData = async () => {
     try {
-      const response = await getSymbollsData();
-      console.log("Symbolsdata", response);
+      const response = await getSymbolsData();
       setCoinsList(response);
     } catch (e: unknown) {
       console.log(e);

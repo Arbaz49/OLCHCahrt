@@ -1,6 +1,5 @@
 import React, {useState } from "react";
 import OrderBook from "../components/OrderBook";
-import {useSearchParams } from "react-router-dom";
 import CoinsTable from "../components/CoinsTable";
 import Header from "../components/Header";
 interface IProps {
@@ -8,10 +7,8 @@ interface IProps {
   selectedCoin:string
 }
 const OrderBookPage = (props: IProps) => {
-
-  const [queryParameters]= useSearchParams();
-  const [chanId,setChanId] = useState(0);
- const coin= queryParameters.get("symbol") || undefined
+const InitialChanId=-1;
+  const [chanId,setChanId] = useState(InitialChanId);
 
   return (
     <>

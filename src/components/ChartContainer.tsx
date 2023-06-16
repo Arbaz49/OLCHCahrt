@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import TooltipDeatails from "./TooltipDeatails";
+import TooltipDetails from "./TooltipDetails";
 import Chart from "./Chart";
 import { ToolTip } from "../types/TooltipTypes";
+import { Initial_TooltipValue } from "../utils/Constants";
 interface ChartProps {
   loading?:boolean,
   setloading?:React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,14 +10,13 @@ interface ChartProps {
   selectedCoin: string ;
   setTimeFrame: React.Dispatch<React.SetStateAction<string>>;
   setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
-  // updateSelectedCoin?:()=>:void{}
 }
 const ChartContainer = (props: ChartProps) => {
   const [tooltip, setTooltip] = useState<ToolTip>({
-    h: 0.0,
-    l: 0.0,
-    o: 0.0,
-    c: 0.0,
+    h: Initial_TooltipValue,
+    l: Initial_TooltipValue,
+    o: Initial_TooltipValue,
+    c: Initial_TooltipValue,
   });
   return (
     <div id="chart">
@@ -29,7 +29,7 @@ const ChartContainer = (props: ChartProps) => {
         setTimeFrame={props.setTimeFrame}
         setSelectedCoin={props.setSelectedCoin}
       />
-      <TooltipDeatails tooltip={tooltip} />
+      <TooltipDetails tooltip={tooltip} />
     </div>
   );
 };
