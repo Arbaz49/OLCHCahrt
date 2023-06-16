@@ -7,16 +7,21 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { CoinsProps, CoinsType } from "../types/DataType";
+import {CoinsType } from "../types/DataType";
 import { useEffect, useState } from "react";
 import { Initial_Number, WS_URL } from "../utils/Constants";
 import { getSymbollsData as getSymbolsData } from "../utils/Services";
-import { useLocation, useNavigate,useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
 import { asksMap, bidsMap } from "../utils/OrderBookservice";
 import {IoAnalytics} from "react-icons/io5";
 
 export const w = new WebSocket(WS_URL);
-
+interface CoinsProps {
+  selectedCoin:string,
+  coinsTableData?: CoinsType[];
+  setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
+  chanId:number
+}
 export default function CoinsTable({
   selectedCoin,
   setSelectedCoin,
@@ -24,18 +29,16 @@ export default function CoinsTable({
 }: CoinsProps) {
   const navigate = useNavigate();
   const location = useLocation();
-  const [queryParameters] = useSearchParams()
-  const coin = selectedCoin || "tBTCUSD";
+  const coin = selectedCoin 
   const [coinIndex, setCoinIndex] = useState<string>(coin);
 
   const handleClick = (symbol: string) => {
-    // alert(["coin",coin])
     setCoinIndex(symbol);
     setSelectedCoin(symbol);
     handleWsMessage(chanId,symbol);
-    // if(location.pathname!=="/"){
-    //   navigate(`/orderbook?symbol=${coin}`);
-    // }
+    if(location.pathname!=="/"){
+      navigate(`/orderbook`);
+    }
   };
 
   const handleWsMessage =(chanId: number,coin:string) => {
@@ -111,7 +114,7 @@ export default function CoinsTable({
               key={row[0]}
               // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               style={
-                coinIndex === row[0] 
+                row[0] === coin 
                   ? { backgroundColor: "aqua" }
                   : {}
               }

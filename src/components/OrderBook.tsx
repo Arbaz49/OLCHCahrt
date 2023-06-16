@@ -1,7 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
 import OrderBookTable from "./OrderBookTable";
-import { OrderProps } from "../types/DataType";
-
+interface OrderProps {
+  selectedCoin: string|undefined;
+  setChanId:React.Dispatch<React.SetStateAction<number>>;
+}
 
 const OrderBook = ({ selectedCoin,setChanId }: OrderProps) => {
   return (

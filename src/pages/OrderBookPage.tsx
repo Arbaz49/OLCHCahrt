@@ -17,8 +17,8 @@ const OrderBookPage = (props: IProps) => {
     <>
       <Header selectedCoin={props.selectedCoin}/>
       <div style={{ display: "flex", width: "70vw", marginLeft: "200px" }}>
-        <CoinsTable setSelectedCoin={props.setSelectedCoin} chanId={chanId} />
-        <OrderBook selectedCoin={coin} setChanId={setChanId}  />
+        <CoinsTable selectedCoin={props.selectedCoin} setSelectedCoin={props.setSelectedCoin} chanId={chanId} />
+        <OrderBook selectedCoin={props.selectedCoin} setChanId={setChanId}  />
       </div>
  
     </>

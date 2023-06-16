@@ -35,7 +35,7 @@ export interface ButtonsType {
   value: string;
 }
 export interface CoinsProps {
-  selectedCoin?:string,
+  selectedCoin:string,
   coinsTableData?: CoinsType[];
   setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
   chanId:number

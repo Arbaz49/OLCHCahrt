@@ -11,7 +11,7 @@ const Header = (props: IProps) => {
     if (window.location.pathname !== "/") {
       navigate("/");
     } else {
-      navigate(`/orderbook?symbol=${props.selectedCoin}`);
+      navigate(`/orderbook`);
     }
   };
   return (

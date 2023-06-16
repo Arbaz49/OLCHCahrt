@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import TooltipDeatails from "./TooltipDeatails";
 import Chart from "./Chart";
 import { ToolTip } from "../types/TooltipTypes";
-import { ChartProps } from "../types/DataType";
-
+interface ChartProps {
+  loading?:boolean,
+  setloading?:React.Dispatch<React.SetStateAction<boolean>>;
+  timeFrame: string;
+  selectedCoin: string ;
+  setTimeFrame: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
+  // updateSelectedCoin?:()=>:void{}
+}
 const ChartContainer = (props: ChartProps) => {
   const [tooltip, setTooltip] = useState<ToolTip>({
     h: 0.0,
