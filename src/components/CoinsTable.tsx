@@ -11,9 +11,7 @@ import { CoinsType } from "../types/DataType";
 import { useEffect, useState } from "react";
 import { Initial_Number, WS_URL } from "../utils/Constants";
 import { getSymbolsData } from "../utils/Services";
-import { useLocation, useNavigate } from "react-router-dom";
 import { asksMap, bidsMap } from "../utils/OrderBookservice";
-// import { IoAnalytics } from "react-icons/io5";
 
 export const w = new WebSocket(WS_URL);
 interface CoinsProps {
@@ -27,16 +25,12 @@ export default function CoinsTable({
   setSelectedCoin,
   chanId,
 }: CoinsProps) {
-  const navigate = useNavigate();
-  const location = useLocation();
   const coin = selectedCoin;
 
   const handleClick = (symbol: string) => {
     setSelectedCoin(symbol);
     handleWsMessage(chanId, symbol);
-    // if (location.pathname !== "/") {
-    //   navigate(`/orderbook`);
-    // }
+    
   };
 
   const handleWsMessage = (chanId: number, coin: string) => {
