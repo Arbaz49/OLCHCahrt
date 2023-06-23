@@ -6,7 +6,6 @@ import { getCandlesData } from "../utils/Services";
 import { ToolTip } from "../types/TooltipTypes";
 import { Button } from "@mui/material";
 import ReactApexChart from "react-apexcharts";
-
 import {
   ButtonsType,
   ChartProps,
@@ -39,7 +38,7 @@ const Chart = (props: IProps) => {
 
   return (
     <>
-      <div className="chartContainer">
+      <div id="chartId"  className="chartContainer">
         <h4>
           {props.selectedCoin.slice(1, 4)} /{" "}
           {props.selectedCoin.slice(4, props.selectedCoin.length)}{" "}
