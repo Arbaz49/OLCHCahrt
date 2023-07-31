@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios from "axios"
 import { processChartData } from "./ProcessData";
 import { BASE_URL} from "./Constants";
+import axios from "axios"
+
 // const w = new WebSocket(WS_URL);
 
 
