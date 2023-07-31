@@ -6,7 +6,7 @@ import {
   Index_Of_Amount,
   Index_Of_Count,
   Index_Of_Price,
-  Index_Of_Total,
+  // Index_Of_Total,
   OrderProps,
 } from "../types/DataType";
 import {
@@ -18,13 +18,13 @@ import {
 import { w } from "./CoinsTable";
 import Loader from "./Loader";
 import { Index_Of_valueInMap } from "../utils/Constants";
-
+type OrderDataType=[number,[number,number,number,number]];
 export default function OrderBookTable({
   selectedCoin,
   setChanId,
 }: OrderProps) {
-  const [bidsTableData, setBidsTableData] = useState<any[]>([]);
-  const [asksTableData, setAsksTableData] = useState<any[]>([]);
+  const [bidsTableData, setBidsTableData] = useState<OrderDataType[]>([]);
+  const [asksTableData, setAsksTableData] = useState<OrderDataType[]>([]);
   // const { coinid } = useParams();
   // const handleWsMessage=(coinid:string|undefined,chanId:number)=>{
   //   w.send(JSON.stringify({
@@ -45,12 +45,7 @@ export default function OrderBookTable({
   // }
   // const [wsEvent, setWsEvent] = useState("subscribe");
   const [chanId] = useState(0);
-  const [wsMessage] = useState({
-    event: "subscribe",
-    channel: "book",
-    symbol: selectedCoin,
-    chanId: chanId,
-  });
+
   useEffect(() => {
     asksMap.clear();
     bidsMap.clear();
@@ -59,7 +54,12 @@ export default function OrderBookTable({
   }, [selectedCoin]);
 
   useEffect(() => {
-    const msg = JSON.stringify(wsMessage);
+    const msg = JSON.stringify({
+      event: "subscribe",
+      channel: "book",
+      symbol: selectedCoin,
+      chanId: chanId,
+    });
     w.onopen = (): void => {
       w.send(msg);
     };
@@ -126,8 +126,8 @@ export default function OrderBookTable({
                           }),
                           value,
                           "bids"
-                        )}
-                        {value[Index_Of_Total].toFixed(3)}
+                        ).toFixed(3)}
+                        {/* {value[Index_Of_Total].toFixed(3)} */}
                       </td>
                       <td>{value[Index_Of_Price]}</td>
                     </tr>
@@ -179,8 +179,8 @@ export default function OrderBookTable({
                         }),
                         value,
                         "asks"
-                      )}
-                      {value[Index_Of_Total].toFixed(3)}{" "}
+                      ).toFixed(3)}
+                      {/* {value[Index_Of_Total].toFixed(3)}{" "} */}
                     </td>
                     <td>{value[Index_Of_Amount].toFixed(3)}</td>
                     <td>{value[Index_Of_Count]}</td>

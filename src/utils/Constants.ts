@@ -29,3 +29,5 @@ export const buttonsData = [
 
 export const Index_Of_valueInMap = 1;
 export const Initial_TooltipValue=0.0;
+export const Index_Of_Symbol=0;
+export const Index_Of_Price=1;

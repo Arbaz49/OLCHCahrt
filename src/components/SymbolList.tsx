@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getSymbolsData } from "../utils/Services";
 import CoinsTable from "./CoinsTable";
 import {CoinsType } from "../types/DataType";
-import { Initial_Number } from "../utils/Constants";
 interface ChartProps {
   loading?:boolean,
   setloading?:React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,21 +11,7 @@ interface ChartProps {
   setSelectedCoin: React.Dispatch<React.SetStateAction<string>>;
 }
 const SymbollsList = (props: ChartProps) => {
-  const [coinsList, setCoinsList] = useState<CoinsType[]>([
-    [
-      "",
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-    ],
-  ]);
+  const [coinsList, setCoinsList] = useState<CoinsType[]>([]);
 
   useEffect(() => {
     handleSymbolsData();

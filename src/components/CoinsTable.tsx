@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { CoinsType } from "../types/DataType";
 import { useEffect, useState } from "react";
-import { Initial_Number, WS_URL } from "../utils/Constants";
+import {Index_Of_Price, Index_Of_Symbol, WS_URL } from "../utils/Constants";
 import { getSymbolsData } from "../utils/Services";
 import { asksMap, bidsMap } from "../utils/OrderBookservice";
 
@@ -30,7 +30,6 @@ export default function CoinsTable({
   const handleClick = (symbol: string) => {
     setSelectedCoin(symbol);
     handleWsMessage(chanId, symbol);
-    
   };
 
   const handleWsMessage = (chanId: number, coin: string) => {
@@ -54,21 +53,7 @@ export default function CoinsTable({
       })
     );
   };
-  const [coinsData, setCoinsData] = useState<CoinsType[]>([
-    [
-      "",
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-      Initial_Number,
-    ],
-  ]);
+  const [coinsData, setCoinsData] = useState<CoinsType[]>([]);
 
   useEffect(() => {
     handleSymbolsData();
@@ -78,12 +63,11 @@ export default function CoinsTable({
     try {
       const response = await getSymbolsData();
       setCoinsData(response);
-    } catch (e: unknown) {
+    } catch (e) {
       console.log(e);
     }
   };
-  const Index_Of_Symbol=0;
-  const Index_Of_Price=1;
+
   return (
     <TableContainer
       className="table"

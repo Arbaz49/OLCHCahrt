@@ -17,7 +17,6 @@ const InitialChanId=-1;
         <CoinsTable selectedCoin={props.selectedCoin} setSelectedCoin={props.setSelectedCoin} chanId={chanId} />
         <OrderBook selectedCoin={props.selectedCoin} setChanId={setChanId}  />
       </div>
- 
     </>
   );
 };
